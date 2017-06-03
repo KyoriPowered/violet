@@ -26,6 +26,7 @@ package net.kyori.violet;
 import com.google.inject.Binder;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
+import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
 
@@ -72,8 +73,8 @@ public interface VBinder extends ForwardingBinder {
      * Creates a new multibinder that collects instances of {@code key}'s type in a {@link Set} that is
      * itself bound with the annotation (if any) of the key.
      *
-     * @param key the key to bind
-     * @param <T> the type
+     * @param key the key to create a set binder for
+     * @param <T> the type of object
      * @return a new multibinder
      * @see Multibinder#newSetBinder(Binder, Key)
      */
@@ -86,8 +87,8 @@ public interface VBinder extends ForwardingBinder {
      * Creates a new multibinder that collects instances of {@code key}'s type in a {@link Set} that is
      * itself bound with the annotation (if any) of the key.
      *
-     * @param type the type to bind
-     * @param <T> the type
+     * @param type the type to create a set binder for
+     * @param <T> the type of object
      * @return a new multibinder
      * @see Multibinder#newSetBinder(Binder, TypeLiteral)
      */
@@ -100,8 +101,8 @@ public interface VBinder extends ForwardingBinder {
      * Creates a new multibinder that collects instances of {@code key}'s type in a {@link Set} that is
      * itself bound with the annotation (if any) of the key.
      *
-     * @param type the type to bind
-     * @param <T> the type
+     * @param type the type to create a set binder for
+     * @param <T> the type of object
      * @return a new multibinder
      * @see Multibinder#newSetBinder(Binder, Class)
      */
@@ -111,10 +112,43 @@ public interface VBinder extends ForwardingBinder {
     }
 
     /**
+     * Installs a factory module for the specified key.
+     *
+     * @param key the key of the factory module to bind
+     * @param <T> the type of object
+     * @see FactoryModuleBuilder#build(Key)
+     */
+    default <T> void bindFactory(@Nonnull final Key<T> key) {
+        this.install(new FactoryModuleBuilder().build(key));
+    }
+
+    /**
+     * Installs a factory module for the specified type.
+     *
+     * @param type the type of the factory module to bind
+     * @param <T> the type of object
+     * @see FactoryModuleBuilder#build(TypeLiteral)
+     */
+    default <T> void bindFactory(@Nonnull final TypeLiteral<T> type) {
+        this.bind(Key.get(type));
+    }
+
+    /**
+     * Installs a factory module for the specified type.
+     *
+     * @param type the type of the factory module to bind
+     * @param <T> the type of object
+     * @see FactoryModuleBuilder#build(Class)
+     */
+    default <T> void bindFactory(@Nonnull final Class<T> type) {
+        this.bind(Key.get(type));
+    }
+
+    /**
      * Creates a binding builder for a lazily-loaded type.
      *
-     * @param key the key to bind
-     * @param <T> the type
+     * @param key the key to create a binding builder for a lazy {@code T}
+     * @param <T> the type of object
      * @return an annotated binding builder
      * @see Lazy
      */
@@ -126,8 +160,8 @@ public interface VBinder extends ForwardingBinder {
     /**
      * Creates a binding builder for a lazily-loaded type.
      *
-     * @param type the type to bind
-     * @param <T> the type
+     * @param type the type to create a binding builder for a lazy {@code T}
+     * @param <T> the type of object
      * @return an annotated binding builder
      * @see Lazy
      */
@@ -139,8 +173,8 @@ public interface VBinder extends ForwardingBinder {
     /**
      * Creates a binding builder for a lazily-loaded type.
      *
-     * @param type the type to bind
-     * @param <T> the type
+     * @param type the type to create a binding builder for a lazy {@code T}
+     * @param <T> the type of object
      * @return an annotated binding builder
      * @see Lazy
      */
