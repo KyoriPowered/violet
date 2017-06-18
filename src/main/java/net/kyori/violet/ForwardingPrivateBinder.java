@@ -35,37 +35,37 @@ import javax.annotation.Nonnull;
  */
 public interface ForwardingPrivateBinder extends ForwardingBinder, PrivateBinder {
 
-    /**
-     * Gets the forwarded private binder that methods are forwarded to.
-     *
-     * @return the forwarded private binder
-     */
-    @Nonnull
-    @Override
-    PrivateBinder binder();
+  /**
+   * Gets the forwarded private binder that methods are forwarded to.
+   *
+   * @return the forwarded private binder
+   */
+  @Nonnull
+  @Override
+  PrivateBinder binder();
 
-    @Override
-    default void expose(final Key<?> key) {
-        this.binder().expose(key);
-    }
+  @Override
+  default void expose(final Key<?> key) {
+    this.binder().expose(key);
+  }
 
-    @Override
-    default AnnotatedElementBuilder expose(final Class<?> type) {
-        return this.binder().expose(type);
-    }
+  @Override
+  default AnnotatedElementBuilder expose(final Class<?> type) {
+    return this.binder().expose(type);
+  }
 
-    @Override
-    default AnnotatedElementBuilder expose(final TypeLiteral<?> type) {
-        return this.binder().expose(type);
-    }
+  @Override
+  default AnnotatedElementBuilder expose(final TypeLiteral<?> type) {
+    return this.binder().expose(type);
+  }
 
-    @Override
-    default PrivateBinder withSource(final Object source) {
-        return this.binder().withSource(source);
-    }
+  @Override
+  default PrivateBinder withSource(final Object source) {
+    return this.binder().withSource(source);
+  }
 
-    @Override
-    default PrivateBinder skipSources(final Class... classesToSkip) {
-        return this.binder().skipSources(classesToSkip);
-    }
+  @Override
+  default PrivateBinder skipSources(final Class... classesToSkip) {
+    return this.binder().skipSources(classesToSkip);
+  }
 }

@@ -38,97 +38,97 @@ import javax.annotation.Nonnull;
 // making changes to guice itself, as guice special-cases PrivateModule
 public interface VPrivateBinder extends ForwardingPrivateBinder, VBinder {
 
-    /**
-     * Creates a wrapped private binder.
-     *
-     * @param binder the private binder
-     * @return a wrapped private binder
-     */
-    @Nonnull
-    static VPrivateBinder of(@Nonnull final PrivateBinder binder) {
-        // avoid re-wrapping
-        if(binder instanceof VPrivateBinder) {
-            return (VPrivateBinder) binder;
-        }
-        return new VPrivateBinderImpl(binder);
+  /**
+   * Creates a wrapped private binder.
+   *
+   * @param binder the private binder
+   * @return a wrapped private binder
+   */
+  @Nonnull
+  static VPrivateBinder of(@Nonnull final PrivateBinder binder) {
+    // avoid re-wrapping
+    if(binder instanceof VPrivateBinder) {
+      return (VPrivateBinder) binder;
     }
+    return new VPrivateBinderImpl(binder);
+  }
 
-    @Override
-    default VPrivateBinder withSource(final Object source) {
-        return of(ForwardingPrivateBinder.super.withSource(source));
-    }
+  @Override
+  default VPrivateBinder withSource(final Object source) {
+    return of(ForwardingPrivateBinder.super.withSource(source));
+  }
 
-    @Override
-    default VPrivateBinder skipSources(final Class... classesToSkip) {
-        return of(ForwardingPrivateBinder.super.skipSources(classesToSkip));
-    }
+  @Override
+  default VPrivateBinder skipSources(final Class... classesToSkip) {
+    return of(ForwardingPrivateBinder.super.skipSources(classesToSkip));
+  }
 
-    /**
-     * Creates a binding builder and exposes {@code key}.
-     *
-     * @param key the key to bind
-     * @param <T> the type
-     * @return a binding builder
-     * @see Binder#bind(Key)
-     * @see PrivateBinder#expose(Key)
-     */
-    @Nonnull
-    default <T> LinkedBindingBuilder<T> bindAndExpose(@Nonnull final Key<T> key) {
-        this.expose(key);
-        return this.bind(key);
-    }
+  /**
+   * Creates a binding builder and exposes {@code key}.
+   *
+   * @param key the key to bind
+   * @param <T> the type
+   * @return a binding builder
+   * @see Binder#bind(Key)
+   * @see PrivateBinder#expose(Key)
+   */
+  @Nonnull
+  default <T> LinkedBindingBuilder<T> bindAndExpose(@Nonnull final Key<T> key) {
+    this.expose(key);
+    return this.bind(key);
+  }
 
-    /**
-     * Creates a binding builder and exposes {@code type}.
-     *
-     * @param type the type to bind
-     * @param <T> the type
-     * @return a binding builder
-     * @see Binder#bind(Class)
-     * @see PrivateBinder#expose(Class)
-     */
-    @Nonnull
-    default <T> LinkedBindingBuilder<T> bindAndExpose(@Nonnull final Class<T> type) {
-        this.expose(type);
-        return this.bind(type);
-    }
+  /**
+   * Creates a binding builder and exposes {@code type}.
+   *
+   * @param type the type to bind
+   * @param <T> the type
+   * @return a binding builder
+   * @see Binder#bind(Class)
+   * @see PrivateBinder#expose(Class)
+   */
+  @Nonnull
+  default <T> LinkedBindingBuilder<T> bindAndExpose(@Nonnull final Class<T> type) {
+    this.expose(type);
+    return this.bind(type);
+  }
 
-    /**
-     * Creates a binding builder and exposes {@code type}.
-     *
-     * @param type the type to bind
-     * @param <T> the type
-     * @return a binding builder
-     * @see Binder#bind(TypeLiteral)
-     * @see PrivateBinder#expose(TypeLiteral)
-     */
-    @Nonnull
-    default <T> LinkedBindingBuilder<T> bindAndExpose(@Nonnull final TypeLiteral<T> type) {
-        this.expose(type);
-        return this.bind(type);
-    }
+  /**
+   * Creates a binding builder and exposes {@code type}.
+   *
+   * @param type the type to bind
+   * @param <T> the type
+   * @return a binding builder
+   * @see Binder#bind(TypeLiteral)
+   * @see PrivateBinder#expose(TypeLiteral)
+   */
+  @Nonnull
+  default <T> LinkedBindingBuilder<T> bindAndExpose(@Nonnull final TypeLiteral<T> type) {
+    this.expose(type);
+    return this.bind(type);
+  }
 }
 
 final class VPrivateBinderImpl implements VPrivateBinder {
 
-    // These sources should be skipped when identifying calling code.
-    private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
-        ForwardingBinder.class,
-        ForwardingPrivateBinder.class,
-        VBinder.class,
-        VBinderImpl.class,
-        VPrivateBinder.class,
-        VPrivateBinderImpl.class
-    };
-    @Nonnull private final PrivateBinder binder;
+  // These sources should be skipped when identifying calling code.
+  private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
+    ForwardingBinder.class,
+    ForwardingPrivateBinder.class,
+    VBinder.class,
+    VBinderImpl.class,
+    VPrivateBinder.class,
+    VPrivateBinderImpl.class
+  };
+  @Nonnull private final PrivateBinder binder;
 
-    VPrivateBinderImpl(@Nonnull final PrivateBinder binder) {
-        this.binder = binder.skipSources(SKIPPED_SOURCES);
-    }
+  VPrivateBinderImpl(@Nonnull final PrivateBinder binder) {
+    this.binder = binder.skipSources(SKIPPED_SOURCES);
+  }
 
-    @Nonnull
-    @Override
-    public PrivateBinder binder() {
-        return this.binder;
-    }
+  @Nonnull
+  @Override
+  public PrivateBinder binder() {
+    return this.binder;
+  }
 }

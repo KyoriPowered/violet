@@ -52,20 +52,20 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface LazySingleton {
 
-    /**
-     * A scope that enables lazy singletons.
-     *
-     * @see SingletonScope
-     */
-    Scope SCOPE = new Scope() {
-        @Override
-        public <T> Provider<T> scope(final Key<T> key, final Provider<T> unscoped) {
-            return Scopes.SINGLETON.scope(key, unscoped);
-        }
+  /**
+   * A scope that enables lazy singletons.
+   *
+   * @see SingletonScope
+   */
+  Scope SCOPE = new Scope() {
+    @Override
+    public <T> Provider<T> scope(final Key<T> key, final Provider<T> unscoped) {
+      return Scopes.SINGLETON.scope(key, unscoped);
+    }
 
-        @Override
-        public String toString() {
-            return "LazySingleton.SCOPE";
-        }
-    };
+    @Override
+    public String toString() {
+      return "LazySingleton.SCOPE";
+    }
+  };
 }

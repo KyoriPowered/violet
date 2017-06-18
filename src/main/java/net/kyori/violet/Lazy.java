@@ -37,21 +37,21 @@ import com.google.inject.Provider;
 // https://github.com/google/guice/issues/852
 public class Lazy<T> implements Provider<T> {
 
-    private final Provider<T> provider;
-    private T value;
-    private boolean loaded;
+  private final Provider<T> provider;
+  private T value;
+  private boolean loaded;
 
-    @Inject
-    Lazy(final Provider<T> provider) {
-        this.provider = provider;
-    }
+  @Inject
+  Lazy(final Provider<T> provider) {
+    this.provider = provider;
+  }
 
-    @Override
-    public T get() {
-        if(!this.loaded) {
-            this.value = this.provider.get();
-            this.loaded = true;
-        }
-        return this.value;
+  @Override
+  public T get() {
+    if(!this.loaded) {
+      this.value = this.provider.get();
+      this.loaded = true;
     }
+    return this.value;
+  }
 }

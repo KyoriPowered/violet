@@ -37,36 +37,36 @@ import static org.junit.Assert.assertTrue;
 // TODO: test LazySingleton?
 public class LazyTest {
 
-    @Test
-    public void testLazy() {
-        final Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                this.bind(Thing.class).to(ThingA.class);
-                this.bindLazy(Thing.class).annotatedWith(Names.named("b")).to(ThingB.class);
-                this.bindLazy(Thing.class).annotatedWith(Names.named("c")).to(ThingC.class);
-            }
-        });
-        final Things things = injector.getInstance(Things.class);
-        assertFalse(things.ap.get() == things.ap.get());
-        assertTrue(things.al.get() == things.al.get());
-        assertTrue(things.bl.get() == things.bl.get());
-        assertTrue(things.cl.get() == things.cl.get());
-        assertTrue(things.dl.get() == things.dl.get());
-    }
+  @Test
+  public void testLazy() {
+    final Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        this.bind(Thing.class).to(ThingA.class);
+        this.bindLazy(Thing.class).annotatedWith(Names.named("b")).to(ThingB.class);
+        this.bindLazy(Thing.class).annotatedWith(Names.named("c")).to(ThingC.class);
+      }
+    });
+    final Things things = injector.getInstance(Things.class);
+    assertFalse(things.ap.get() == things.ap.get());
+    assertTrue(things.al.get() == things.al.get());
+    assertTrue(things.bl.get() == things.bl.get());
+    assertTrue(things.cl.get() == things.cl.get());
+    assertTrue(things.dl.get() == things.dl.get());
+  }
 
-    private interface Thing {}
-    private static class ThingA implements Thing {}
-    private static class ThingB implements Thing {}
-    private static class ThingC implements Thing {}
-    private static class ThingD {}
+  private interface Thing {}
+  private static class ThingA implements Thing {}
+  private static class ThingB implements Thing {}
+  private static class ThingC implements Thing {}
+  private static class ThingD {}
 
-    private static class Things {
+  private static class Things {
 
-        @Inject Provider<Thing> ap;
-        @Inject Lazy<Thing> al;
-        @Inject @Named("b") Lazy<Thing> bl;
-        @Inject @Named("c") Lazy<Thing> cl;
-        @Inject Lazy<ThingD> dl;
-    }
+    @Inject Provider<Thing> ap;
+    @Inject Lazy<Thing> al;
+    @Inject @Named("b") Lazy<Thing> bl;
+    @Inject @Named("c") Lazy<Thing> cl;
+    @Inject Lazy<ThingD> dl;
+  }
 }

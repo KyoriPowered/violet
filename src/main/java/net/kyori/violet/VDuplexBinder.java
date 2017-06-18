@@ -32,56 +32,56 @@ import javax.annotation.Nonnull;
  */
 public interface VDuplexBinder extends ForwardingDuplexBinder, VPrivateBinder {
 
-    /**
-     * Creates a wrapped duplex binder.
-     *
-     * @param binder the duplex binder
-     * @return a wrapped duplex binder
-     */
-    @Nonnull
-    static VDuplexBinder of(@Nonnull final DuplexBinder binder) {
-        // avoid re-wrapping
-        if(binder instanceof VDuplexBinder) {
-            return (VDuplexBinder) binder;
-        }
-        return new VDuplexBinderImpl(binder);
+  /**
+   * Creates a wrapped duplex binder.
+   *
+   * @param binder the duplex binder
+   * @return a wrapped duplex binder
+   */
+  @Nonnull
+  static VDuplexBinder of(@Nonnull final DuplexBinder binder) {
+    // avoid re-wrapping
+    if(binder instanceof VDuplexBinder) {
+      return (VDuplexBinder) binder;
     }
+    return new VDuplexBinderImpl(binder);
+  }
 
-    @Override
-    default VDuplexBinder withSource(final Object source) {
-        return of(ForwardingDuplexBinder.super.withSource(source));
-    }
+  @Override
+  default VDuplexBinder withSource(final Object source) {
+    return of(ForwardingDuplexBinder.super.withSource(source));
+  }
 
-    @Override
-    default VDuplexBinder skipSources(final Class... classesToSkip) {
-        return of(ForwardingDuplexBinder.super.skipSources(classesToSkip));
-    }
+  @Override
+  default VDuplexBinder skipSources(final Class... classesToSkip) {
+    return of(ForwardingDuplexBinder.super.skipSources(classesToSkip));
+  }
 
 }
 
 final class VDuplexBinderImpl implements VDuplexBinder {
 
-    // These sources should be skipped when identifying calling code.
-    private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
-        ForwardingBinder.class,
-        ForwardingPrivateBinder.class,
-        ForwardingDuplexBinder.class,
-        VBinder.class,
-        VBinderImpl.class,
-        VPrivateBinder.class,
-        VPrivateBinderImpl.class,
-        VDuplexBinder.class,
-        VDuplexBinderImpl.class
-    };
-    @Nonnull private final DuplexBinder binder;
+  // These sources should be skipped when identifying calling code.
+  private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
+    ForwardingBinder.class,
+    ForwardingPrivateBinder.class,
+    ForwardingDuplexBinder.class,
+    VBinder.class,
+    VBinderImpl.class,
+    VPrivateBinder.class,
+    VPrivateBinderImpl.class,
+    VDuplexBinder.class,
+    VDuplexBinderImpl.class
+  };
+  @Nonnull private final DuplexBinder binder;
 
-    VDuplexBinderImpl(@Nonnull final DuplexBinder binder) {
-        this.binder = binder.skipSources(SKIPPED_SOURCES);
-    }
+  VDuplexBinderImpl(@Nonnull final DuplexBinder binder) {
+    this.binder = binder.skipSources(SKIPPED_SOURCES);
+  }
 
-    @Nonnull
-    @Override
-    public DuplexBinder binder() {
-        return this.binder;
-    }
+  @Nonnull
+  @Override
+  public DuplexBinder binder() {
+    return this.binder;
+  }
 }

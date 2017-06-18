@@ -32,28 +32,28 @@ import javax.annotation.Nonnull;
  */
 public interface ForwardingDuplexBinder extends ForwardingPrivateBinder, DuplexBinder {
 
-    /**
-     * Gets the forwarded duplex binder that methods are forwarded to.
-     *
-     * @return the forwarded duplex binder
-     */
-    @Nonnull
-    @Override
-    DuplexBinder binder();
+  /**
+   * Gets the forwarded duplex binder that methods are forwarded to.
+   *
+   * @return the forwarded duplex binder
+   */
+  @Nonnull
+  @Override
+  DuplexBinder binder();
 
-    @Nonnull
-    @Override
-    default Binder publicBinder() {
-        return this.binder().publicBinder();
-    }
+  @Nonnull
+  @Override
+  default Binder publicBinder() {
+    return this.binder().publicBinder();
+  }
 
-    @Override
-    default DuplexBinder withSource(final Object source) {
-        return this.binder().withSource(source);
-    }
+  @Override
+  default DuplexBinder withSource(final Object source) {
+    return this.binder().withSource(source);
+  }
 
-    @Override
-    default DuplexBinder skipSources(final Class... classesToSkip) {
-        return this.binder().skipSources(classesToSkip);
-    }
+  @Override
+  default DuplexBinder skipSources(final Class... classesToSkip) {
+    return this.binder().skipSources(classesToSkip);
+  }
 }

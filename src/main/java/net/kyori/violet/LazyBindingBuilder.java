@@ -38,36 +38,36 @@ import javax.annotation.Nonnull;
 
 final class LazyBindingBuilder<T> implements AnnotatedBindingBuilder<T>, ForwardingLinkedBindingBuilder<T> {
 
-    private final Binder binder;
-    private final AnnotatedBindingBuilder<Lazy<T>> builder;
-    private final Key<T> key;
+  private final Binder binder;
+  private final AnnotatedBindingBuilder<Lazy<T>> builder;
+  private final Key<T> key;
 
-    LazyBindingBuilder(final Binder binder, final Key<T> key) {
-        this.binder = binder.skipSources(LazyBindingBuilder.class);
-        this.builder = this.binder.bind((TypeLiteral<Lazy<T>>) TypeLiteral.get(Types.newParameterizedType(Lazy.class, key.getTypeLiteral().getType())));
-        this.key = key;
-    }
+  LazyBindingBuilder(final Binder binder, final Key<T> key) {
+    this.binder = binder.skipSources(LazyBindingBuilder.class);
+    this.builder = this.binder.bind((TypeLiteral<Lazy<T>>) TypeLiteral.get(Types.newParameterizedType(Lazy.class, key.getTypeLiteral().getType())));
+    this.key = key;
+  }
 
-    @Nonnull
-    @Override
-    public LinkedBindingBuilder<T> builder() {
-        return this.binder.bind(this.key);
-    }
+  @Nonnull
+  @Override
+  public LinkedBindingBuilder<T> builder() {
+    return this.binder.bind(this.key);
+  }
 
-    @Override
-    public LinkedBindingBuilder<T> annotatedWith(final Class<? extends Annotation> annotationType) {
-        return this.annotatedWith(this.builder.annotatedWith(annotationType), Key.get(this.key.getTypeLiteral(), annotationType));
-    }
+  @Override
+  public LinkedBindingBuilder<T> annotatedWith(final Class<? extends Annotation> annotationType) {
+    return this.annotatedWith(this.builder.annotatedWith(annotationType), Key.get(this.key.getTypeLiteral(), annotationType));
+  }
 
-    @Override
-    public LinkedBindingBuilder<T> annotatedWith(final Annotation annotation) {
-        return this.annotatedWith(this.builder.annotatedWith(annotation), Key.get(this.key.getTypeLiteral(), annotation));
-    }
+  @Override
+  public LinkedBindingBuilder<T> annotatedWith(final Annotation annotation) {
+    return this.annotatedWith(this.builder.annotatedWith(annotation), Key.get(this.key.getTypeLiteral(), annotation));
+  }
 
-    private LinkedBindingBuilder<T> annotatedWith(final LinkedBindingBuilder<Lazy<T>> builder, final Key<T> key) {
-        final Provider<T> provider = this.binder.getProvider(key);
-        builder.toProvider(() -> new Lazy<>(provider));
-        return (ForwardingLinkedBindingBuilder<T>) () -> this.binder.bind(key);
-    }
+  private LinkedBindingBuilder<T> annotatedWith(final LinkedBindingBuilder<Lazy<T>> builder, final Key<T> key) {
+    final Provider<T> provider = this.binder.getProvider(key);
+    builder.toProvider(() -> new Lazy<>(provider));
+    return (ForwardingLinkedBindingBuilder<T>) () -> this.binder.bind(key);
+  }
 }
 

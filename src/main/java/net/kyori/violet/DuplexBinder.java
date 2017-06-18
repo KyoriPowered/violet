@@ -41,91 +41,91 @@ import javax.annotation.Nullable;
  */
 public interface DuplexBinder extends ForwardingPrivateBinder {
 
-    /**
-     * Creates a new duplex binder.
-     *
-     * @param binder the enclosing (public) binder
-     * @return a new duplex binder
-     */
-    static DuplexBinder create(final Binder binder) {
-        if(binder instanceof DuplexBinder) {
-            return (DuplexBinder) binder;
-        }
-        return new DuplexBinderImpl(binder, binder.newPrivateBinder());
+  /**
+   * Creates a new duplex binder.
+   *
+   * @param binder the enclosing (public) binder
+   * @return a new duplex binder
+   */
+  static DuplexBinder create(final Binder binder) {
+    if(binder instanceof DuplexBinder) {
+      return (DuplexBinder) binder;
     }
+    return new DuplexBinderImpl(binder, binder.newPrivateBinder());
+  }
 
-    /**
-     * Gets the binder of the enclosing environment.
-     *
-     * @return the binder of the enclosing environment
-     */
-    @Nonnull
-    Binder publicBinder();
+  /**
+   * Gets the binder of the enclosing environment.
+   *
+   * @return the binder of the enclosing environment
+   */
+  @Nonnull
+  Binder publicBinder();
 
-    @Override
-    default DuplexBinder withSource(final Object source) {
-        return new DuplexBinderImpl(this.publicBinder().withSource(source), this.binder().withSource(source));
-    }
+  @Override
+  default DuplexBinder withSource(final Object source) {
+    return new DuplexBinderImpl(this.publicBinder().withSource(source), this.binder().withSource(source));
+  }
 
-    @Override
-    default DuplexBinder skipSources(final Class... classesToSkip) {
-        return new DuplexBinderImpl(this.publicBinder().skipSources(classesToSkip), this.binder().skipSources(classesToSkip));
-    }
+  @Override
+  default DuplexBinder skipSources(final Class... classesToSkip) {
+    return new DuplexBinderImpl(this.publicBinder().skipSources(classesToSkip), this.binder().skipSources(classesToSkip));
+  }
 }
 
 final class DuplexBinderImpl implements DuplexBinder {
 
-    // These sources should be skipped when identifying calling code.
-    private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
-        ForwardingBinder.class,
-        ForwardingPrivateBinder.class,
-        ForwardingDuplexBinder.class,
-        DuplexBinder.class,
-        DuplexBinderImpl.class,
-        DuplexModule.class
-    };
-    private static final ThreadLocal<DuplexBinderImpl> ACTIVE_BINDER = new ThreadLocal<>();
-    private final Binder publicBinder;
-    private final PrivateBinder privateBinder;
+  // These sources should be skipped when identifying calling code.
+  private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
+    ForwardingBinder.class,
+    ForwardingPrivateBinder.class,
+    ForwardingDuplexBinder.class,
+    DuplexBinder.class,
+    DuplexBinderImpl.class,
+    DuplexModule.class
+  };
+  private static final ThreadLocal<DuplexBinderImpl> ACTIVE_BINDER = new ThreadLocal<>();
+  private final Binder publicBinder;
+  private final PrivateBinder privateBinder;
 
-    DuplexBinderImpl(final Binder publicBinder, final PrivateBinder privateBinder) {
-        this.publicBinder = publicBinder.skipSources(SKIPPED_SOURCES);
-        // Special case DuplexBinder to prevent creation of a new DuplexBinderImpl when skipping sources
-        this.privateBinder = (privateBinder instanceof DuplexBinder ? ((DuplexBinder) privateBinder).binder() : privateBinder).skipSources(SKIPPED_SOURCES);
-    }
+  DuplexBinderImpl(final Binder publicBinder, final PrivateBinder privateBinder) {
+    this.publicBinder = publicBinder.skipSources(SKIPPED_SOURCES);
+    // Special case DuplexBinder to prevent creation of a new DuplexBinderImpl when skipping sources
+    this.privateBinder = (privateBinder instanceof DuplexBinder ? ((DuplexBinder) privateBinder).binder() : privateBinder).skipSources(SKIPPED_SOURCES);
+  }
 
-    @Nonnull
-    @Override
-    public Binder publicBinder() {
-        return this.publicBinder;
-    }
+  @Nonnull
+  @Override
+  public Binder publicBinder() {
+    return this.publicBinder;
+  }
 
-    @Nonnull
-    @Override
-    public PrivateBinder binder() {
-        return this.privateBinder;
-    }
+  @Nonnull
+  @Override
+  public PrivateBinder binder() {
+    return this.privateBinder;
+  }
 
-    @Override
-    public void install(final Module module) {
-        @Nullable final DuplexBinderImpl activeBinder = ACTIVE_BINDER.get();
-        ACTIVE_BINDER.set(this);
-        try {
-            this.privateBinder.install(module);
-        } finally {
-            ACTIVE_BINDER.set(activeBinder);
-        }
+  @Override
+  public void install(final Module module) {
+    @Nullable final DuplexBinderImpl activeBinder = ACTIVE_BINDER.get();
+    ACTIVE_BINDER.set(this);
+    try {
+      this.privateBinder.install(module);
+    } finally {
+      ACTIVE_BINDER.set(activeBinder);
     }
+  }
 
-    @CheckForNull
-    static DuplexBinder activeBinder(@Nonnull final Binder binder) {
-        if(binder instanceof DuplexBinder) {
-            return (DuplexBinder) binder;
-        }
-        @CheckForNull final DuplexBinderImpl activeBinder = ACTIVE_BINDER.get();
-        if(activeBinder != null && activeBinder.privateBinder == binder) {
-            return activeBinder;
-        }
-        return null;
+  @CheckForNull
+  static DuplexBinder activeBinder(@Nonnull final Binder binder) {
+    if(binder instanceof DuplexBinder) {
+      return (DuplexBinder) binder;
     }
+    @CheckForNull final DuplexBinderImpl activeBinder = ACTIVE_BINDER.get();
+    if(activeBinder != null && activeBinder.privateBinder == binder) {
+      return activeBinder;
+    }
+    return null;
+  }
 }

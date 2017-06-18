@@ -36,58 +36,58 @@ import static org.junit.Assert.assertEquals;
 
 public class DuplexTest {
 
-    @Test
-    public void test() {
-        final Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                this.bind(Thing.class).annotatedWith(Names.named("p0")).toInstance(new Thing("p0"));
+  @Test
+  public void test() {
+    final Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        this.bind(Thing.class).annotatedWith(Names.named("p0")).toInstance(new Thing("p0"));
 
-                final DuplexBinder binder = DuplexBinder.create(this.binder());
-                binder.install(new DuplexModule() {
-                    @Override
-                    protected void configure() {
-                        this.bind(Thing.class).annotatedWith(Names.named("d0")).toInstance(new Thing("d0"));
-                        this.expose(Thing.class).annotatedWith(Names.named("d0"));
-                    }
-                });
-                binder.install(new DuplexModule() {
-                    @Override
-                    protected void configure() {
-                        this.bind(Thing.class).annotatedWith(Names.named("d1")).toInstance(new Thing("d1"));
-                        this.expose(Thing.class).annotatedWith(Names.named("d1"));
-                        this.install(new DuplexModule() {
-                            @Override
-                            protected void configure() {
-                                this.bind(Thing.class).annotatedWith(Names.named("d2")).toInstance(new Thing("d2"));
-                                this.expose(Thing.class).annotatedWith(Names.named("d2"));
-                            }
-                        });
-                    }
-                });
-            }
+        final DuplexBinder binder = DuplexBinder.create(this.binder());
+        binder.install(new DuplexModule() {
+          @Override
+          protected void configure() {
+            this.bind(Thing.class).annotatedWith(Names.named("d0")).toInstance(new Thing("d0"));
+            this.expose(Thing.class).annotatedWith(Names.named("d0"));
+          }
         });
-        final Things things = injector.getInstance(Things.class);
-        assertEquals("p0", things.p0.id);
-        assertEquals("d0", things.d0.id);
-        assertEquals("d1", things.d1.id);
-        assertEquals("d2", things.d2.id);
+        binder.install(new DuplexModule() {
+          @Override
+          protected void configure() {
+            this.bind(Thing.class).annotatedWith(Names.named("d1")).toInstance(new Thing("d1"));
+            this.expose(Thing.class).annotatedWith(Names.named("d1"));
+            this.install(new DuplexModule() {
+              @Override
+              protected void configure() {
+                this.bind(Thing.class).annotatedWith(Names.named("d2")).toInstance(new Thing("d2"));
+                this.expose(Thing.class).annotatedWith(Names.named("d2"));
+              }
+            });
+          }
+        });
+      }
+    });
+    final Things things = injector.getInstance(Things.class);
+    assertEquals("p0", things.p0.id);
+    assertEquals("d0", things.d0.id);
+    assertEquals("d1", things.d1.id);
+    assertEquals("d2", things.d2.id);
+  }
+
+  private static class Thing {
+
+    final String id;
+
+    Thing(final String id) {
+      this.id = id;
     }
+  }
 
-    private static class Thing {
+  private static class Things {
 
-        final String id;
-
-        Thing(final String id) {
-            this.id = id;
-        }
-    }
-
-    private static class Things {
-
-        @Inject @Named("p0") Thing p0;
-        @Inject @Named("d0") Thing d0;
-        @Inject @Named("d1") Thing d1;
-        @Inject @Named("d2") Thing d2;
-    }
+    @Inject @Named("p0") Thing p0;
+    @Inject @Named("d0") Thing d0;
+    @Inject @Named("d1") Thing d1;
+    @Inject @Named("d2") Thing d2;
+  }
 }

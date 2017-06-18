@@ -55,161 +55,161 @@ import javax.annotation.Nonnull;
  */
 public interface ForwardingBinder extends Binder {
 
-    /**
-     * Gets the forwarded binder that methods are forwarded to.
-     *
-     * @return the forwarded binder
-     */
-    @Nonnull
-    Binder binder();
+  /**
+   * Gets the forwarded binder that methods are forwarded to.
+   *
+   * @return the forwarded binder
+   */
+  @Nonnull
+  Binder binder();
 
-    @Override
-    default void bindInterceptor(final Matcher<? super Class<?>> classMatcher, final Matcher<? super Method> methodMatcher, final MethodInterceptor... interceptors) {
-        this.binder().bindInterceptor(classMatcher, methodMatcher, interceptors);
-    }
+  @Override
+  default void bindInterceptor(final Matcher<? super Class<?>> classMatcher, final Matcher<? super Method> methodMatcher, final MethodInterceptor... interceptors) {
+    this.binder().bindInterceptor(classMatcher, methodMatcher, interceptors);
+  }
 
-    @Override
-    default void bindScope(final Class<? extends Annotation> annotationType, final Scope scope) {
-        this.binder().bindScope(annotationType, scope);
-    }
+  @Override
+  default void bindScope(final Class<? extends Annotation> annotationType, final Scope scope) {
+    this.binder().bindScope(annotationType, scope);
+  }
 
-    @Override
-    default <T> LinkedBindingBuilder<T> bind(final Key<T> key) {
-        return this.binder().bind(key);
-    }
+  @Override
+  default <T> LinkedBindingBuilder<T> bind(final Key<T> key) {
+    return this.binder().bind(key);
+  }
 
-    @Override
-    default <T> AnnotatedBindingBuilder<T> bind(final TypeLiteral<T> typeLiteral) {
-        return this.binder().bind(typeLiteral);
-    }
+  @Override
+  default <T> AnnotatedBindingBuilder<T> bind(final TypeLiteral<T> typeLiteral) {
+    return this.binder().bind(typeLiteral);
+  }
 
-    @Override
-    default <T> AnnotatedBindingBuilder<T> bind(final Class<T> type) {
-        return this.binder().bind(type);
-    }
+  @Override
+  default <T> AnnotatedBindingBuilder<T> bind(final Class<T> type) {
+    return this.binder().bind(type);
+  }
 
-    @Override
-    default AnnotatedConstantBindingBuilder bindConstant() {
-        return this.binder().bindConstant();
-    }
+  @Override
+  default AnnotatedConstantBindingBuilder bindConstant() {
+    return this.binder().bindConstant();
+  }
 
-    @Override
-    default <T> void requestInjection(final TypeLiteral<T> type, final T instance) {
-        this.binder().requestInjection(type, instance);
-    }
+  @Override
+  default <T> void requestInjection(final TypeLiteral<T> type, final T instance) {
+    this.binder().requestInjection(type, instance);
+  }
 
-    @Override
-    default void requestInjection(final Object instance) {
-        this.binder().requestInjection(instance);
-    }
+  @Override
+  default void requestInjection(final Object instance) {
+    this.binder().requestInjection(instance);
+  }
 
-    @Override
-    default void requestStaticInjection(final Class<?>... types) {
-        this.binder().requestStaticInjection(types);
-    }
+  @Override
+  default void requestStaticInjection(final Class<?>... types) {
+    this.binder().requestStaticInjection(types);
+  }
 
-    @Override
-    default void install(final Module module) {
-        this.binder().install(module);
-    }
+  @Override
+  default void install(final Module module) {
+    this.binder().install(module);
+  }
 
-    @Override
-    default Stage currentStage() {
-        return this.binder().currentStage();
-    }
+  @Override
+  default Stage currentStage() {
+    return this.binder().currentStage();
+  }
 
-    @Override
-    default void addError(final String message, final Object... arguments) {
-        this.binder().addError(message, arguments);
-    }
+  @Override
+  default void addError(final String message, final Object... arguments) {
+    this.binder().addError(message, arguments);
+  }
 
-    @Override
-    default void addError(final Throwable t) {
-        this.binder().addError(t);
-    }
+  @Override
+  default void addError(final Throwable t) {
+    this.binder().addError(t);
+  }
 
-    @Override
-    default void addError(final Message message) {
-        this.binder().addError(message);
-    }
+  @Override
+  default void addError(final Message message) {
+    this.binder().addError(message);
+  }
 
-    @Override
-    default <T> Provider<T> getProvider(final Key<T> key) {
-        return this.binder().getProvider(key);
-    }
+  @Override
+  default <T> Provider<T> getProvider(final Key<T> key) {
+    return this.binder().getProvider(key);
+  }
 
-    @Override
-    default <T> Provider<T> getProvider(final Dependency<T> dependency) {
-        return this.binder().getProvider(dependency);
-    }
+  @Override
+  default <T> Provider<T> getProvider(final Dependency<T> dependency) {
+    return this.binder().getProvider(dependency);
+  }
 
-    @Override
-    default <T> Provider<T> getProvider(final Class<T> type) {
-        return this.binder().getProvider(type);
-    }
+  @Override
+  default <T> Provider<T> getProvider(final Class<T> type) {
+    return this.binder().getProvider(type);
+  }
 
-    @Override
-    default <T> MembersInjector<T> getMembersInjector(final TypeLiteral<T> typeLiteral) {
-        return this.binder().getMembersInjector(typeLiteral);
-    }
+  @Override
+  default <T> MembersInjector<T> getMembersInjector(final TypeLiteral<T> typeLiteral) {
+    return this.binder().getMembersInjector(typeLiteral);
+  }
 
-    @Override
-    default <T> MembersInjector<T> getMembersInjector(final Class<T> type) {
-        return this.binder().getMembersInjector(type);
-    }
+  @Override
+  default <T> MembersInjector<T> getMembersInjector(final Class<T> type) {
+    return this.binder().getMembersInjector(type);
+  }
 
-    @Override
-    default void convertToTypes(final Matcher<? super TypeLiteral<?>> typeMatcher, final TypeConverter converter) {
-        this.binder().convertToTypes(typeMatcher, converter);
-    }
+  @Override
+  default void convertToTypes(final Matcher<? super TypeLiteral<?>> typeMatcher, final TypeConverter converter) {
+    this.binder().convertToTypes(typeMatcher, converter);
+  }
 
-    @Override
-    default void bindListener(final Matcher<? super TypeLiteral<?>> typeMatcher, final TypeListener listener) {
-        this.binder().bindListener(typeMatcher, listener);
-    }
+  @Override
+  default void bindListener(final Matcher<? super TypeLiteral<?>> typeMatcher, final TypeListener listener) {
+    this.binder().bindListener(typeMatcher, listener);
+  }
 
-    @Override
-    default void bindListener(final Matcher<? super Binding<?>> bindingMatcher, final ProvisionListener... listeners) {
-        this.binder().bindListener(bindingMatcher, listeners);
-    }
+  @Override
+  default void bindListener(final Matcher<? super Binding<?>> bindingMatcher, final ProvisionListener... listeners) {
+    this.binder().bindListener(bindingMatcher, listeners);
+  }
 
-    @Override
-    default Binder withSource(final Object source) {
-        return this.binder().withSource(source);
-    }
+  @Override
+  default Binder withSource(final Object source) {
+    return this.binder().withSource(source);
+  }
 
-    @Override
-    default Binder skipSources(final Class... classesToSkip) {
-        return this.binder().skipSources(classesToSkip);
-    }
+  @Override
+  default Binder skipSources(final Class... classesToSkip) {
+    return this.binder().skipSources(classesToSkip);
+  }
 
-    @Override
-    default PrivateBinder newPrivateBinder() {
-        return this.binder().newPrivateBinder();
-    }
+  @Override
+  default PrivateBinder newPrivateBinder() {
+    return this.binder().newPrivateBinder();
+  }
 
-    @Override
-    default void requireExplicitBindings() {
-        this.binder().requireExplicitBindings();
-    }
+  @Override
+  default void requireExplicitBindings() {
+    this.binder().requireExplicitBindings();
+  }
 
-    @Override
-    default void disableCircularProxies() {
-        this.binder().disableCircularProxies();
-    }
+  @Override
+  default void disableCircularProxies() {
+    this.binder().disableCircularProxies();
+  }
 
-    @Override
-    default void requireAtInjectOnConstructors() {
-        this.binder().requireAtInjectOnConstructors();
-    }
+  @Override
+  default void requireAtInjectOnConstructors() {
+    this.binder().requireAtInjectOnConstructors();
+  }
 
-    @Override
-    default void requireExactBindingAnnotations() {
-        this.binder().requireExactBindingAnnotations();
-    }
+  @Override
+  default void requireExactBindingAnnotations() {
+    this.binder().requireExactBindingAnnotations();
+  }
 
-    @Override
-    default void scanModulesForAnnotatedMethods(final ModuleAnnotatedMethodScanner scanner) {
-        this.binder().scanModulesForAnnotatedMethods(scanner);
-    }
+  @Override
+  default void scanModulesForAnnotatedMethods(final ModuleAnnotatedMethodScanner scanner) {
+    this.binder().scanModulesForAnnotatedMethods(scanner);
+  }
 }

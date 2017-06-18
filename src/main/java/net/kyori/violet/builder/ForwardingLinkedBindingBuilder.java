@@ -40,81 +40,81 @@ import javax.annotation.Nonnull;
  */
 public interface ForwardingLinkedBindingBuilder<T> extends LinkedBindingBuilder<T> {
 
-    /**
-     * Gets the forwarded linked binding builder that methods are forwarded to.
-     *
-     * @return the forwarded linked binding builder
-     */
-    @Nonnull
-    LinkedBindingBuilder<T> builder();
+  /**
+   * Gets the forwarded linked binding builder that methods are forwarded to.
+   *
+   * @return the forwarded linked binding builder
+   */
+  @Nonnull
+  LinkedBindingBuilder<T> builder();
 
-    @Override
-    default ScopedBindingBuilder to(final Class<? extends T> implementation) {
-        return this.builder().to(implementation);
-    }
+  @Override
+  default ScopedBindingBuilder to(final Class<? extends T> implementation) {
+    return this.builder().to(implementation);
+  }
 
-    @Override
-    default ScopedBindingBuilder to(final TypeLiteral<? extends T> implementation) {
-        return this.builder().to(implementation);
-    }
+  @Override
+  default ScopedBindingBuilder to(final TypeLiteral<? extends T> implementation) {
+    return this.builder().to(implementation);
+  }
 
-    @Override
-    default ScopedBindingBuilder to(final Key<? extends T> targetKey) {
-        return this.builder().to(targetKey);
-    }
+  @Override
+  default ScopedBindingBuilder to(final Key<? extends T> targetKey) {
+    return this.builder().to(targetKey);
+  }
 
-    @Override
-    default void toInstance(final T instance) {
-        this.builder().toInstance(instance);
-    }
+  @Override
+  default void toInstance(final T instance) {
+    this.builder().toInstance(instance);
+  }
 
-    @Override
-    default ScopedBindingBuilder toProvider(final Provider<? extends T> provider) {
-        return this.builder().toProvider(provider);
-    }
+  @Override
+  default ScopedBindingBuilder toProvider(final Provider<? extends T> provider) {
+    return this.builder().toProvider(provider);
+  }
 
-    @Override
-    default ScopedBindingBuilder toProvider(final javax.inject.Provider<? extends T> provider) {
-        return this.builder().toProvider(provider);
-    }
+  @Override
+  default ScopedBindingBuilder toProvider(final javax.inject.Provider<? extends T> provider) {
+    return this.builder().toProvider(provider);
+  }
 
-    @Override
-    default ScopedBindingBuilder toProvider(final Class<? extends javax.inject.Provider<? extends T>> providerType) {
-        return this.builder().toProvider(providerType);
-    }
+  @Override
+  default ScopedBindingBuilder toProvider(final Class<? extends javax.inject.Provider<? extends T>> providerType) {
+    return this.builder().toProvider(providerType);
+  }
 
-    @Override
-    default ScopedBindingBuilder toProvider(final TypeLiteral<? extends javax.inject.Provider<? extends T>> providerType) {
-        return this.builder().toProvider(providerType);
-    }
+  @Override
+  default ScopedBindingBuilder toProvider(final TypeLiteral<? extends javax.inject.Provider<? extends T>> providerType) {
+    return this.builder().toProvider(providerType);
+  }
 
-    @Override
-    default ScopedBindingBuilder toProvider(final Key<? extends javax.inject.Provider<? extends T>> providerKey) {
-        return this.builder().toProvider(providerKey);
-    }
+  @Override
+  default ScopedBindingBuilder toProvider(final Key<? extends javax.inject.Provider<? extends T>> providerKey) {
+    return this.builder().toProvider(providerKey);
+  }
 
-    @Override
-    default <S extends T> ScopedBindingBuilder toConstructor(final Constructor<S> constructor) {
-        return this.builder().toConstructor(constructor);
-    }
+  @Override
+  default <S extends T> ScopedBindingBuilder toConstructor(final Constructor<S> constructor) {
+    return this.builder().toConstructor(constructor);
+  }
 
-    @Override
-    default <S extends T> ScopedBindingBuilder toConstructor(final Constructor<S> constructor, final TypeLiteral<? extends S> type) {
-        return this.builder().toConstructor(constructor, type);
-    }
+  @Override
+  default <S extends T> ScopedBindingBuilder toConstructor(final Constructor<S> constructor, final TypeLiteral<? extends S> type) {
+    return this.builder().toConstructor(constructor, type);
+  }
 
-    @Override
-    default void in(final Class<? extends Annotation> scopeAnnotation) {
-        this.builder().in(scopeAnnotation);
-    }
+  @Override
+  default void in(final Class<? extends Annotation> scopeAnnotation) {
+    this.builder().in(scopeAnnotation);
+  }
 
-    @Override
-    default void in(final Scope scope) {
-        this.builder().in(scope);
-    }
+  @Override
+  default void in(final Scope scope) {
+    this.builder().in(scope);
+  }
 
-    @Override
-    default void asEagerSingleton() {
-        this.builder().asEagerSingleton();
-    }
+  @Override
+  default void asEagerSingleton() {
+    this.builder().asEagerSingleton();
+  }
 }

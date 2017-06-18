@@ -39,28 +39,28 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public abstract class AbstractModule implements Module, VBinder {
 
-    @Nullable private Binder binder;
+  @Nullable private Binder binder;
 
-    @Override
-    public final void configure(final Binder binder) {
-        checkState(this.binder == null, "Re-entry is not allowed.");
-        this.binder = binder;
-        try {
-            this.configure();
-        } finally {
-            this.binder = null;
-        }
+  @Override
+  public final void configure(final Binder binder) {
+    checkState(this.binder == null, "Re-entry is not allowed.");
+    this.binder = binder;
+    try {
+      this.configure();
+    } finally {
+      this.binder = null;
     }
+  }
 
-    /**
-     * Configures a {@link Binder} via the exposed methods.
-     */
-    protected abstract void configure();
+  /**
+   * Configures a {@link Binder} via the exposed methods.
+   */
+  protected abstract void configure();
 
-    @Nonnull
-    @Override
-    public Binder binder() {
-        checkState(this.binder != null, "The binder can only be used inside configure()");
-        return this.binder;
-    }
+  @Nonnull
+  @Override
+  public Binder binder() {
+    checkState(this.binder != null, "The binder can only be used inside configure()");
+    return this.binder;
+  }
 }

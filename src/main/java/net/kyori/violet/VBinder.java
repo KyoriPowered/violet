@@ -39,168 +39,168 @@ import javax.annotation.Nonnull;
  */
 public interface VBinder extends ForwardingBinder {
 
-    /**
-     * Creates a wrapped binder.
-     *
-     * @param binder the binder
-     * @return a wrapped binder
-     */
-    @Nonnull
-    static VBinder of(@Nonnull final Binder binder) {
-        // avoid re-wrapping
-        if(binder instanceof VBinder) {
-            return (VBinder) binder;
-        }
-        return new VBinderImpl(binder);
+  /**
+   * Creates a wrapped binder.
+   *
+   * @param binder the binder
+   * @return a wrapped binder
+   */
+  @Nonnull
+  static VBinder of(@Nonnull final Binder binder) {
+    // avoid re-wrapping
+    if(binder instanceof VBinder) {
+      return (VBinder) binder;
     }
+    return new VBinderImpl(binder);
+  }
 
-    @Override
-    default VBinder withSource(final Object source) {
-        return of(ForwardingBinder.super.withSource(source));
-    }
+  @Override
+  default VBinder withSource(final Object source) {
+    return of(ForwardingBinder.super.withSource(source));
+  }
 
-    @Override
-    default VBinder skipSources(final Class... classesToSkip) {
-        return of(ForwardingBinder.super.skipSources(classesToSkip));
-    }
+  @Override
+  default VBinder skipSources(final Class... classesToSkip) {
+    return of(ForwardingBinder.super.skipSources(classesToSkip));
+  }
 
-    @Override
-    default VPrivateBinder newPrivateBinder() {
-        return VPrivateBinder.of(ForwardingBinder.super.newPrivateBinder());
-    }
+  @Override
+  default VPrivateBinder newPrivateBinder() {
+    return VPrivateBinder.of(ForwardingBinder.super.newPrivateBinder());
+  }
 
-    /**
-     * Creates a new multibinder that collects instances of {@code key}'s type in a {@link Set} that is
-     * itself bound with the annotation (if any) of the key.
-     *
-     * @param key the key to create a set binder for
-     * @param <T> the type of object
-     * @return a new multibinder
-     * @see Multibinder#newSetBinder(Binder, Key)
-     */
-    @Nonnull
-    default <T> Multibinder<T> inSet(@Nonnull final Key<T> key) {
-        return Multibinder.newSetBinder(this.binder(), key);
-    }
+  /**
+   * Creates a new multibinder that collects instances of {@code key}'s type in a {@link Set} that is
+   * itself bound with the annotation (if any) of the key.
+   *
+   * @param key the key to create a set binder for
+   * @param <T> the type of object
+   * @return a new multibinder
+   * @see Multibinder#newSetBinder(Binder, Key)
+   */
+  @Nonnull
+  default <T> Multibinder<T> inSet(@Nonnull final Key<T> key) {
+    return Multibinder.newSetBinder(this.binder(), key);
+  }
 
-    /**
-     * Creates a new multibinder that collects instances of {@code key}'s type in a {@link Set} that is
-     * itself bound with the annotation (if any) of the key.
-     *
-     * @param type the type to create a set binder for
-     * @param <T> the type of object
-     * @return a new multibinder
-     * @see Multibinder#newSetBinder(Binder, TypeLiteral)
-     */
-    @Nonnull
-    default <T> Multibinder<T> inSet(@Nonnull final TypeLiteral<T> type) {
-        return this.inSet(Key.get(type));
-    }
+  /**
+   * Creates a new multibinder that collects instances of {@code key}'s type in a {@link Set} that is
+   * itself bound with the annotation (if any) of the key.
+   *
+   * @param type the type to create a set binder for
+   * @param <T> the type of object
+   * @return a new multibinder
+   * @see Multibinder#newSetBinder(Binder, TypeLiteral)
+   */
+  @Nonnull
+  default <T> Multibinder<T> inSet(@Nonnull final TypeLiteral<T> type) {
+    return this.inSet(Key.get(type));
+  }
 
-    /**
-     * Creates a new multibinder that collects instances of {@code key}'s type in a {@link Set} that is
-     * itself bound with the annotation (if any) of the key.
-     *
-     * @param type the type to create a set binder for
-     * @param <T> the type of object
-     * @return a new multibinder
-     * @see Multibinder#newSetBinder(Binder, Class)
-     */
-    @Nonnull
-    default <T> Multibinder<T> inSet(@Nonnull final Class<T> type) {
-        return this.inSet(Key.get(type));
-    }
+  /**
+   * Creates a new multibinder that collects instances of {@code key}'s type in a {@link Set} that is
+   * itself bound with the annotation (if any) of the key.
+   *
+   * @param type the type to create a set binder for
+   * @param <T> the type of object
+   * @return a new multibinder
+   * @see Multibinder#newSetBinder(Binder, Class)
+   */
+  @Nonnull
+  default <T> Multibinder<T> inSet(@Nonnull final Class<T> type) {
+    return this.inSet(Key.get(type));
+  }
 
-    /**
-     * Installs a factory module for the specified key.
-     *
-     * @param key the key of the factory module to bind
-     * @param <T> the type of object
-     * @see FactoryModuleBuilder#build(Key)
-     */
-    default <T> void bindFactory(@Nonnull final Key<T> key) {
-        this.install(new FactoryModuleBuilder().build(key));
-    }
+  /**
+   * Installs a factory module for the specified key.
+   *
+   * @param key the key of the factory module to bind
+   * @param <T> the type of object
+   * @see FactoryModuleBuilder#build(Key)
+   */
+  default <T> void bindFactory(@Nonnull final Key<T> key) {
+    this.install(new FactoryModuleBuilder().build(key));
+  }
 
-    /**
-     * Installs a factory module for the specified type.
-     *
-     * @param type the type of the factory module to bind
-     * @param <T> the type of object
-     * @see FactoryModuleBuilder#build(TypeLiteral)
-     */
-    default <T> void bindFactory(@Nonnull final TypeLiteral<T> type) {
-        this.bind(Key.get(type));
-    }
+  /**
+   * Installs a factory module for the specified type.
+   *
+   * @param type the type of the factory module to bind
+   * @param <T> the type of object
+   * @see FactoryModuleBuilder#build(TypeLiteral)
+   */
+  default <T> void bindFactory(@Nonnull final TypeLiteral<T> type) {
+    this.bind(Key.get(type));
+  }
 
-    /**
-     * Installs a factory module for the specified type.
-     *
-     * @param type the type of the factory module to bind
-     * @param <T> the type of object
-     * @see FactoryModuleBuilder#build(Class)
-     */
-    default <T> void bindFactory(@Nonnull final Class<T> type) {
-        this.bind(Key.get(type));
-    }
+  /**
+   * Installs a factory module for the specified type.
+   *
+   * @param type the type of the factory module to bind
+   * @param <T> the type of object
+   * @see FactoryModuleBuilder#build(Class)
+   */
+  default <T> void bindFactory(@Nonnull final Class<T> type) {
+    this.bind(Key.get(type));
+  }
 
-    /**
-     * Creates a binding builder for a lazily-loaded type.
-     *
-     * @param key the key to create a binding builder for a lazy {@code T}
-     * @param <T> the type of object
-     * @return an annotated binding builder
-     * @see Lazy
-     */
-    @Nonnull
-    default <T> AnnotatedBindingBuilder<T> bindLazy(@Nonnull final Key<T> key) {
-        return new LazyBindingBuilder<>(this.binder(), key);
-    }
+  /**
+   * Creates a binding builder for a lazily-loaded type.
+   *
+   * @param key the key to create a binding builder for a lazy {@code T}
+   * @param <T> the type of object
+   * @return an annotated binding builder
+   * @see Lazy
+   */
+  @Nonnull
+  default <T> AnnotatedBindingBuilder<T> bindLazy(@Nonnull final Key<T> key) {
+    return new LazyBindingBuilder<>(this.binder(), key);
+  }
 
-    /**
-     * Creates a binding builder for a lazily-loaded type.
-     *
-     * @param type the type to create a binding builder for a lazy {@code T}
-     * @param <T> the type of object
-     * @return an annotated binding builder
-     * @see Lazy
-     */
-    @Nonnull
-    default <T> AnnotatedBindingBuilder<T> bindLazy(@Nonnull final TypeLiteral<T> type) {
-        return this.bindLazy(Key.get(type));
-    }
+  /**
+   * Creates a binding builder for a lazily-loaded type.
+   *
+   * @param type the type to create a binding builder for a lazy {@code T}
+   * @param <T> the type of object
+   * @return an annotated binding builder
+   * @see Lazy
+   */
+  @Nonnull
+  default <T> AnnotatedBindingBuilder<T> bindLazy(@Nonnull final TypeLiteral<T> type) {
+    return this.bindLazy(Key.get(type));
+  }
 
-    /**
-     * Creates a binding builder for a lazily-loaded type.
-     *
-     * @param type the type to create a binding builder for a lazy {@code T}
-     * @param <T> the type of object
-     * @return an annotated binding builder
-     * @see Lazy
-     */
-    @Nonnull
-    default <T> AnnotatedBindingBuilder<T> bindLazy(@Nonnull final Class<T> type) {
-        return this.bindLazy(Key.get(type));
-    }
+  /**
+   * Creates a binding builder for a lazily-loaded type.
+   *
+   * @param type the type to create a binding builder for a lazy {@code T}
+   * @param <T> the type of object
+   * @return an annotated binding builder
+   * @see Lazy
+   */
+  @Nonnull
+  default <T> AnnotatedBindingBuilder<T> bindLazy(@Nonnull final Class<T> type) {
+    return this.bindLazy(Key.get(type));
+  }
 }
 
 final class VBinderImpl implements VBinder {
 
-    // These sources should be skipped when identifying calling code.
-    private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
-        ForwardingBinder.class,
-        VBinder.class,
-        VBinderImpl.class
-    };
-    @Nonnull private final Binder binder;
+  // These sources should be skipped when identifying calling code.
+  private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
+    ForwardingBinder.class,
+    VBinder.class,
+    VBinderImpl.class
+  };
+  @Nonnull private final Binder binder;
 
-    VBinderImpl(@Nonnull final Binder binder) {
-        this.binder = binder.skipSources(SKIPPED_SOURCES);
-    }
+  VBinderImpl(@Nonnull final Binder binder) {
+    this.binder = binder.skipSources(SKIPPED_SOURCES);
+  }
 
-    @Nonnull
-    @Override
-    public Binder binder() {
-        return this.binder;
-    }
+  @Nonnull
+  @Override
+  public Binder binder() {
+    return this.binder;
+  }
 }

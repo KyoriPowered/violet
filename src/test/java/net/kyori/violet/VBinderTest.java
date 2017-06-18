@@ -35,30 +35,30 @@ import static org.junit.Assert.assertEquals;
 // TODO: test VDuplexBinder and VPrivateBinder
 public class VBinderTest {
 
-    @Test
-    public void testInSet() {
-        final Injector injector = Guice.createInjector(new AbstractModule() {
-            @Override
-            protected void configure() {
-                this.inSet(Thing.class).addBinding().to(ThingA.class);
-                this.install(new AbstractModule() {
-                    @Override
-                    protected void configure() {
-                        this.inSet(Thing.class).addBinding().to(ThingB.class);
-                    }
-                });
-            }
+  @Test
+  public void testInSet() {
+    final Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        this.inSet(Thing.class).addBinding().to(ThingA.class);
+        this.install(new AbstractModule() {
+          @Override
+          protected void configure() {
+            this.inSet(Thing.class).addBinding().to(ThingB.class);
+          }
         });
-        final Things things = injector.getInstance(Things.class);
-        assertEquals(2, things.things.size());
-    }
+      }
+    });
+    final Things things = injector.getInstance(Things.class);
+    assertEquals(2, things.things.size());
+  }
 
-    private interface Thing {}
-    private static class ThingA implements Thing {}
-    private static class ThingB implements Thing {}
+  private interface Thing {}
+  private static class ThingA implements Thing {}
+  private static class ThingB implements Thing {}
 
-    private static class Things {
+  private static class Things {
 
-        @Inject Set<Thing> things;
-    }
+    @Inject Set<Thing> things;
+  }
 }

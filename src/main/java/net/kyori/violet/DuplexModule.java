@@ -65,36 +65,36 @@ import static com.google.common.base.Preconditions.checkState;
 // https://github.com/google/guice/issues/369#issuecomment-48217990
 public abstract class DuplexModule implements Module, VDuplexBinder {
 
-    @Nullable private DuplexBinder binder;
+  @Nullable private DuplexBinder binder;
 
-    @Override
-    public void configure(final Binder binder) {
-        checkState(this.binder == null, "Re-entry is not allowed.");
-        this.binder = DuplexBinderImpl.activeBinder(binder);
-        // a null binder means that we aren't being installed into a DuplexBinder
-        if(this.binder == null) {
-            binder.skipSources(DuplexModule.class).addError(
-                "%s was installed into %s but must be installed into %s",
-                this.getClass().getName(), binder.getClass().getName(), DuplexBinder.class.getName()
-            );
-            return;
-        }
-        try {
-            this.configure();
-        } finally {
-            this.binder = null;
-        }
+  @Override
+  public void configure(final Binder binder) {
+    checkState(this.binder == null, "Re-entry is not allowed.");
+    this.binder = DuplexBinderImpl.activeBinder(binder);
+    // a null binder means that we aren't being installed into a DuplexBinder
+    if(this.binder == null) {
+      binder.skipSources(DuplexModule.class).addError(
+        "%s was installed into %s but must be installed into %s",
+        this.getClass().getName(), binder.getClass().getName(), DuplexBinder.class.getName()
+      );
+      return;
     }
-
-    /**
-     * Configures a {@link Binder} via the exposed methods.
-     */
-    protected abstract void configure();
-
-    @Nonnull
-    @Override
-    public DuplexBinder binder() {
-        checkState(this.binder != null, "The binder can only be used inside configure()");
-        return this.binder;
+    try {
+      this.configure();
+    } finally {
+      this.binder = null;
     }
+  }
+
+  /**
+   * Configures a {@link Binder} via the exposed methods.
+   */
+  protected abstract void configure();
+
+  @Nonnull
+  @Override
+  public DuplexBinder binder() {
+    checkState(this.binder != null, "The binder can only be used inside configure()");
+    return this.binder;
+  }
 }
