@@ -68,7 +68,7 @@ public abstract class DuplexModule implements Module, VDuplexBinder {
   @Nullable private DuplexBinder binder;
 
   @Override
-  public void configure(final Binder binder) {
+  public final void configure(final Binder binder) {
     checkState(this.binder == null, "Re-entry is not allowed.");
     this.binder = DuplexBinderImpl.activeBinder(binder);
     // a null binder means that we aren't being installed into a DuplexBinder
