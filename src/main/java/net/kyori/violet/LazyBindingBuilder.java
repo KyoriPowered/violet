@@ -26,10 +26,8 @@ package net.kyori.violet;
 import com.google.inject.Binder;
 import com.google.inject.Key;
 import com.google.inject.Provider;
-import com.google.inject.TypeLiteral;
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.binder.LinkedBindingBuilder;
-import com.google.inject.util.Types;
 import net.kyori.violet.builder.ForwardingLinkedBindingBuilder;
 
 import java.lang.annotation.Annotation;
@@ -44,7 +42,7 @@ final class LazyBindingBuilder<T> implements AnnotatedBindingBuilder<T>, Forward
 
   LazyBindingBuilder(final Binder binder, final Key<T> key) {
     this.binder = binder.skipSources(LazyBindingBuilder.class);
-    this.builder = this.binder.bind((TypeLiteral<Lazy<T>>) TypeLiteral.get(Types.newParameterizedType(Lazy.class, key.getTypeLiteral().getType())));
+    this.builder = this.binder.bind(new FriendlyTypeLiteral<Lazy<T>>() {}.where(new TypeArgument<T>(key) {}));
     this.key = key;
   }
 
@@ -70,4 +68,3 @@ final class LazyBindingBuilder<T> implements AnnotatedBindingBuilder<T>, Forward
     return (ForwardingLinkedBindingBuilder<T>) () -> this.binder.bind(key);
   }
 }
-
