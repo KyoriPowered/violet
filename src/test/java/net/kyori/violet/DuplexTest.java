@@ -24,6 +24,7 @@
 package net.kyori.violet;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.ConfigurationException;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.name.Names;
@@ -33,11 +34,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class DuplexTest {
 
   @Test
-  public void test() {
+  public void testStandard() {
     final Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -74,6 +76,31 @@ public class DuplexTest {
     assertEquals("d2", things.d2.id);
   }
 
+  @Test
+  public void testNotExposed() {
+    final Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        DuplexBinder.create(this.binder()).install(new DuplexModule() {
+          @Override
+          protected void configure() {
+            this.bind(Thing.class).annotatedWith(Names.named("r0")).toInstance(new Thing("r0"));
+          }
+        });
+      }
+    });
+    try {
+      injector.getInstance(ShouldNotWork.class);
+    } catch(final ConfigurationException expected) {
+      final String message = expected.getMessage();
+      if(message.contains("It was already configured on one or more child injectors or private modules")
+        && message.contains("If it was in a PrivateModule, did you forget to expose the binding?")) {
+        return;
+      }
+    }
+    fail("should not be exposed");
+  }
+
   private static class Thing {
 
     final String id;
@@ -89,5 +116,10 @@ public class DuplexTest {
     @Inject @Named("d0") Thing d0;
     @Inject @Named("d1") Thing d1;
     @Inject @Named("d2") Thing d2;
+  }
+
+  private static class ShouldNotWork {
+
+    @Inject @Named("r0") Thing r0;
   }
 }
