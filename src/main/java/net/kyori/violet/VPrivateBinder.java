@@ -27,6 +27,7 @@ import com.google.inject.Binder;
 import com.google.inject.Key;
 import com.google.inject.PrivateBinder;
 import com.google.inject.TypeLiteral;
+import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.binder.LinkedBindingBuilder;
 
 import javax.annotation.Nonnull;
@@ -88,9 +89,8 @@ public interface VPrivateBinder extends ForwardingPrivateBinder, VBinder {
    * @see PrivateBinder#expose(Class)
    */
   @Nonnull
-  default <T> LinkedBindingBuilder<T> bindAndExpose(@Nonnull final Class<T> type) {
-    this.expose(type);
-    return this.bind(type);
+  default <T> AnnotatedBindingBuilder<T> bindAndExpose(@Nonnull final Class<T> type) {
+    return this.bindAndExpose(TypeLiteral.get(type));
   }
 
   /**
@@ -103,9 +103,8 @@ public interface VPrivateBinder extends ForwardingPrivateBinder, VBinder {
    * @see PrivateBinder#expose(TypeLiteral)
    */
   @Nonnull
-  default <T> LinkedBindingBuilder<T> bindAndExpose(@Nonnull final TypeLiteral<T> type) {
-    this.expose(type);
-    return this.bind(type);
+  default <T> AnnotatedBindingBuilder<T> bindAndExpose(@Nonnull final TypeLiteral<T> type) {
+    return new BindAndExposeBindingBuilder<>(this.bind(type), this.expose(type));
   }
 }
 

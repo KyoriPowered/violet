@@ -23,11 +23,14 @@
  */
 package net.kyori.violet;
 
+import com.google.inject.BindingAnnotation;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import org.junit.Test;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -53,12 +56,40 @@ public class VBinderTest {
     assertEquals(2, things.things.size());
   }
 
+  @Test
+  public void testExposed() {
+    final Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        DuplexBinder.create(this.binder()).install(new DuplexModule() {
+          @Override
+          protected void configure() {
+            this.bindAndExpose(Thing.class).to(ThingA.class);
+            this.bindAndExpose(Thing.class).annotatedWith(ThingAnnotation.class).to(ThingB.class);
+          }
+        });
+      }
+    });
+    final ExposeThings things = injector.getInstance(ExposeThings.class);
+    assertEquals(ThingA.class, things.a.getClass());
+    assertEquals(ThingB.class, things.b.getClass());
+  }
+
   private interface Thing {}
   private static class ThingA implements Thing {}
   private static class ThingB implements Thing {}
+  @BindingAnnotation
+  @Retention(RetentionPolicy.RUNTIME)
+  private @interface ThingAnnotation {}
 
   private static class Things {
 
     @Inject Set<Thing> things;
+  }
+
+  private static class ExposeThings {
+
+    @Inject Thing a;
+    @Inject @ThingAnnotation Thing b;
   }
 }
