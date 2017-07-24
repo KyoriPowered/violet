@@ -36,21 +36,21 @@ public class TypeLiteralsTest {
 
   @Test
   public void testListOf() {
-    assertEquals(TypeLiterals.listOf(String.class), new TypeLiteral<List<String>>() {});
-    assertEquals(TypeLiterals.listOf(new TypeLiteral<String>() { }), new TypeLiteral<List<String>>() {});
+    assertEquals(new TypeLiteral<List<String>>() {}, TypeLiterals.listOf(String.class));
+    assertEquals(new TypeLiteral<List<String>>() {}, TypeLiterals.listOf(new TypeLiteral<String>() {}));
   }
 
   @Test
   public void testMapOf() {
-    assertEquals(TypeLiterals.mapOf(String.class, String.class), new TypeLiteral<Map<String, String>>() {});
-    assertEquals(TypeLiterals.mapOf(String.class, new TypeLiteral<String>() { }), new TypeLiteral<Map<String, String>>() {});
-    assertEquals(TypeLiterals.mapOf(new TypeLiteral<String>() { }, String.class), new TypeLiteral<Map<String, String>>() {});
-    assertEquals(TypeLiterals.mapOf(new TypeLiteral<String>() { }, new TypeLiteral<String>() { }), new TypeLiteral<Map<String, String>>() {});
+    assertEquals(new TypeLiteral<Map<String, String>>() {}, TypeLiterals.mapOf(String.class, String.class));
+    assertEquals(new TypeLiteral<Map<String, String>>() {}, TypeLiterals.mapOf(String.class, new TypeLiteral<String>() {}));
+    assertEquals(new TypeLiteral<Map<String, String>>() {}, TypeLiterals.mapOf(new TypeLiteral<String>() {}, String.class));
+    assertEquals(new TypeLiteral<Map<String, String>>() {}, TypeLiterals.mapOf(new TypeLiteral<String>() {}, new TypeLiteral<String>() {}));
   }
 
   @Test
   public void testSetOf() {
-    assertEquals(TypeLiterals.setOf(String.class), new TypeLiteral<Set<String>>() {});
-    assertEquals(TypeLiterals.setOf(new TypeLiteral<String>() { }), new TypeLiteral<Set<String>>() {});
+    assertEquals(new TypeLiteral<Set<String>>() {}, TypeLiterals.setOf(String.class));
+    assertEquals(new TypeLiteral<Set<String>>() {}, TypeLiterals.setOf(new TypeLiteral<String>() {}));
   }
 }

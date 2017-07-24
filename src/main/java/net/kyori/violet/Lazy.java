@@ -26,6 +26,8 @@ package net.kyori.violet;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
+import java.util.function.Supplier;
+
 /**
  * A lazily-loaded dependency.
  *
@@ -35,7 +37,7 @@ import com.google.inject.Provider;
  * @param <T> the type to provide
  */
 // https://github.com/google/guice/issues/852
-public class Lazy<T> implements Provider<T> {
+public class Lazy<T> implements Provider<T>, Supplier<T> {
 
   private final Provider<T> provider;
   private T value;
