@@ -118,7 +118,7 @@ public interface VBinder extends ForwardingBinder {
    * @param <T> the type of object
    * @see FactoryModuleBuilder#build(Key)
    */
-  default <T> void bindFactory(@Nonnull final Key<T> key) {
+  default <T> void installFactory(@Nonnull final Key<T> key) {
     this.install(new FactoryModuleBuilder().build(key));
   }
 
@@ -129,8 +129,8 @@ public interface VBinder extends ForwardingBinder {
    * @param <T> the type of object
    * @see FactoryModuleBuilder#build(TypeLiteral)
    */
-  default <T> void bindFactory(@Nonnull final TypeLiteral<T> type) {
-    this.bind(Key.get(type));
+  default <T> void installFactory(@Nonnull final TypeLiteral<T> type) {
+    this.installFactory(Key.get(type));
   }
 
   /**
@@ -140,8 +140,8 @@ public interface VBinder extends ForwardingBinder {
    * @param <T> the type of object
    * @see FactoryModuleBuilder#build(Class)
    */
-  default <T> void bindFactory(@Nonnull final Class<T> type) {
-    this.bind(Key.get(type));
+  default <T> void installFactory(@Nonnull final Class<T> type) {
+    this.installFactory(Key.get(type));
   }
 
   /**
