@@ -28,6 +28,8 @@ import com.google.inject.Provider;
 
 import java.util.function.Supplier;
 
+import javax.annotation.Nonnull;
+
 /**
  * A lazily-loaded dependency.
  *
@@ -44,7 +46,7 @@ public class Lazy<T> implements Provider<T>, Supplier<T> {
   private boolean loaded;
 
   @Inject
-  Lazy(final Provider<T> provider) {
+  Lazy(@Nonnull final Provider<T> provider) {
     this.provider = provider;
   }
 

@@ -47,7 +47,8 @@ public interface DuplexBinder extends ForwardingPrivateBinder {
    * @param binder the enclosing (public) binder
    * @return a new duplex binder
    */
-  static DuplexBinder create(final Binder binder) {
+  @Nonnull
+  static DuplexBinder create(@Nonnull final Binder binder) {
     if(binder instanceof DuplexBinder) {
       return (DuplexBinder) binder;
     }

@@ -27,6 +27,7 @@ import com.google.inject.BindingAnnotation;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.assistedinject.Assisted;
 import org.junit.Test;
 
 import java.lang.annotation.Retention;
@@ -75,6 +76,18 @@ public class VBinderTest {
     assertEquals(ThingB.class, things.b.getClass());
   }
 
+  @Test
+  public void testFactory() {
+    final Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        this.installFactory(FooThingFactory.class);
+      }
+    });
+    final FooThings things = injector.getInstance(FooThings.class);
+    assertEquals(100, things.factory.create(100).value);
+  }
+
   private interface Thing {}
   private static class ThingA implements Thing {}
   private static class ThingB implements Thing {}
@@ -91,5 +104,25 @@ public class VBinderTest {
 
     @Inject Thing a;
     @Inject @ThingAnnotation Thing b;
+  }
+
+  private static class FooThing {
+
+    final int value;
+
+    @Inject
+    private FooThing(@Assisted final int value) {
+      this.value = value;
+    }
+  }
+
+  private interface FooThingFactory {
+
+    FooThing create(final int value);
+  }
+
+  private static class FooThings {
+
+    @Inject FooThingFactory factory;
   }
 }

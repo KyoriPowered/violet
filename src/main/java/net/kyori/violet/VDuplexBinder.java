@@ -56,7 +56,6 @@ public interface VDuplexBinder extends ForwardingDuplexBinder, VPrivateBinder {
   default VDuplexBinder skipSources(final Class... classesToSkip) {
     return of(ForwardingDuplexBinder.super.skipSources(classesToSkip));
   }
-
 }
 
 final class VDuplexBinderImpl implements VDuplexBinder {

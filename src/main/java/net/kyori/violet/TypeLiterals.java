@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 /**
  * A collection of methods for constructing common parameterized type literals.
  */
@@ -45,7 +47,8 @@ public interface TypeLiterals {
    * @return a type literal
    * @see Types#collectionOf(Type)
    */
-  static <T> TypeLiteral<Collection<T>> collectionOf(final Class<T> type) {
+  @Nonnull
+  static <T> TypeLiteral<Collection<T>> collectionOf(@Nonnull final Class<T> type) {
     return collectionOf(TypeLiteral.get(type));
   }
 
@@ -57,7 +60,8 @@ public interface TypeLiterals {
    * @return a type literal
    * @see Types#collectionOf(Type)
    */
-  static <T> TypeLiteral<Collection<T>> collectionOf(final TypeLiteral<T> type) {
+  @Nonnull
+  static <T> TypeLiteral<Collection<T>> collectionOf(@Nonnull final TypeLiteral<T> type) {
     return new FriendlyTypeLiteral<Collection<T>>() {}.where(new TypeArgument<T>(type) {});
   }
 
@@ -69,7 +73,8 @@ public interface TypeLiterals {
    * @return a type literal
    * @see Types#listOf(Type)
    */
-  static <T> TypeLiteral<List<T>> listOf(final Class<T> type) {
+  @Nonnull
+  static <T> TypeLiteral<List<T>> listOf(@Nonnull final Class<T> type) {
     return listOf(TypeLiteral.get(type));
   }
 
@@ -81,7 +86,8 @@ public interface TypeLiterals {
    * @return a type literal
    * @see Types#listOf(Type)
    */
-  static <T> TypeLiteral<List<T>> listOf(final TypeLiteral<T> type) {
+  @Nonnull
+  static <T> TypeLiteral<List<T>> listOf(@Nonnull final TypeLiteral<T> type) {
     return new FriendlyTypeLiteral<List<T>>() {}.where(new TypeArgument<T>(type) {});
   }
 
@@ -96,7 +102,8 @@ public interface TypeLiterals {
    * @return a type literal
    * @see Types#mapOf(Type, Type)
    */
-  static <K, V> TypeLiteral<Map<K, V>> mapOf(final Class<K> key, final Class<V> value) {
+  @Nonnull
+  static <K, V> TypeLiteral<Map<K, V>> mapOf(@Nonnull final Class<K> key, @Nonnull final Class<V> value) {
     return mapOf(TypeLiteral.get(key), TypeLiteral.get(value));
   }
 
@@ -111,7 +118,8 @@ public interface TypeLiterals {
    * @return a type literal
    * @see Types#mapOf(Type, Type)
    */
-  static <K, V> TypeLiteral<Map<K, V>> mapOf(final Class<K> key, final TypeLiteral<V> value) {
+  @Nonnull
+  static <K, V> TypeLiteral<Map<K, V>> mapOf(@Nonnull final Class<K> key, @Nonnull final TypeLiteral<V> value) {
     return mapOf(TypeLiteral.get(key), value);
   }
 
@@ -126,7 +134,8 @@ public interface TypeLiterals {
    * @return a type literal
    * @see Types#mapOf(Type, Type)
    */
-  static <K, V> TypeLiteral<Map<K, V>> mapOf(final TypeLiteral<K> key, final Class<V> value) {
+  @Nonnull
+  static <K, V> TypeLiteral<Map<K, V>> mapOf(@Nonnull final TypeLiteral<K> key, @Nonnull final Class<V> value) {
     return mapOf(key, TypeLiteral.get(value));
   }
 
@@ -141,7 +150,8 @@ public interface TypeLiterals {
    * @return a type literal
    * @see Types#mapOf(Type, Type)
    */
-  static <K, V> TypeLiteral<Map<K, V>> mapOf(final TypeLiteral<K> key, final TypeLiteral<V> value) {
+  @Nonnull
+  static <K, V> TypeLiteral<Map<K, V>> mapOf(@Nonnull final TypeLiteral<K> key, @Nonnull final TypeLiteral<V> value) {
     return new FriendlyTypeLiteral<Map<K, V>>() {}.where(new TypeArgument<K>(key) {}, new TypeArgument<V>(value) {});
   }
 
@@ -153,7 +163,8 @@ public interface TypeLiterals {
    * @return a type literal
    * @see Types#setOf(Type)
    */
-  static <T> TypeLiteral<Set<T>> setOf(final Class<T> type) {
+  @Nonnull
+  static <T> TypeLiteral<Set<T>> setOf(@Nonnull final Class<T> type) {
     return setOf(TypeLiteral.get(type));
   }
 
@@ -165,7 +176,8 @@ public interface TypeLiterals {
    * @return a type literal
    * @see Types#setOf(Type)
    */
-  static <T> TypeLiteral<Set<T>> setOf(final TypeLiteral<T> type) {
+  @Nonnull
+  static <T> TypeLiteral<Set<T>> setOf(@Nonnull final TypeLiteral<T> type) {
     return new FriendlyTypeLiteral<Set<T>>() {}.where(new TypeArgument<T>(type) {});
   }
 }
