@@ -81,11 +81,11 @@ public class VBinderTest {
     final Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
-        this.installFactory(FooThingFactory.class);
+        this.installFactory(FooThingFactory.class, builder -> builder.implement(FooThing.class, FooThingImpl.class));
       }
     });
     final FooThings things = injector.getInstance(FooThings.class);
-    assertEquals(100, things.factory.create(100).value);
+    assertEquals(100, things.factory.create(100).value());
   }
 
   private interface Thing {}
@@ -106,13 +106,23 @@ public class VBinderTest {
     @Inject @ThingAnnotation Thing b;
   }
 
-  private static class FooThing {
+  private interface FooThing {
+
+    int value();
+  }
+
+  private static class FooThingImpl implements FooThing {
 
     final int value;
 
     @Inject
-    private FooThing(@Assisted final int value) {
+    private FooThingImpl(@Assisted final int value) {
       this.value = value;
+    }
+
+    @Override
+    public int value() {
+      return this.value;
     }
   }
 

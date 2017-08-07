@@ -31,6 +31,7 @@ import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
 
 import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 
@@ -142,6 +143,44 @@ public interface VBinder extends ForwardingBinder {
    */
   default <T> void installFactory(@Nonnull final Class<T> type) {
     this.installFactory(Key.get(type));
+  }
+
+  /**
+   * Installs a factory module for the specified key, and allow a consumer to provide additional configuration information.
+   *
+   * @param key the key of the factory module to bind
+   * @param consumer the consumer used to provide additional configuration information
+   * @param <T> the type of object
+   * @see FactoryModuleBuilder#build(Key)
+   */
+  default <T> void installFactory(@Nonnull final Key<T> key, @Nonnull final Consumer<FactoryModuleBuilder> consumer) {
+    final FactoryModuleBuilder builder = new FactoryModuleBuilder();
+    consumer.accept(builder);
+    this.install(builder.build(key));
+  }
+
+  /**
+   * Installs a factory module for the specified type, and allow a consumer to provide additional configuration information.
+   *
+   * @param type the type of the factory module to bind
+   * @param consumer the consumer used to provide additional configuration information
+   * @param <T> the type of object
+   * @see FactoryModuleBuilder#build(TypeLiteral)
+   */
+  default <T> void installFactory(@Nonnull final TypeLiteral<T> type, @Nonnull final Consumer<FactoryModuleBuilder> consumer) {
+    this.installFactory(Key.get(type), consumer);
+  }
+
+  /**
+   * Installs a factory module for the specified type, and allow a consumer to provide additional configuration information.
+   *
+   * @param type the type of the factory module to bind
+   * @param consumer the consumer used to provide additional configuration information
+   * @param <T> the type of object
+   * @see FactoryModuleBuilder#build(TypeLiteral)
+   */
+  default <T> void installFactory(@Nonnull final Class<T> type, @Nonnull final Consumer<FactoryModuleBuilder> consumer) {
+    this.installFactory(Key.get(type), consumer);
   }
 
   /**
