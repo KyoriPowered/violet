@@ -56,6 +56,12 @@ signing {
     sign configurations.archives
 }
 
+jar {
+    manifest.attributes(
+      'Automatic-Module-Name': 'net.kyori.violet'
+    )
+}
+
 if(project.hasProperty('sonatypeUsername') && project.hasProperty('sonatypePassword')) {
     uploadArchives {
         repositories {
