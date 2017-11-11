@@ -27,10 +27,9 @@ import com.google.common.reflect.TypeParameter;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.TypeLiteral;
 import com.google.inject.util.Types;
+import net.kyori.blizzard.NonNull;
 
 import java.lang.reflect.Type;
-
-import javax.annotation.Nonnull;
 
 /**
  * Represents a generic type {@code T}.
@@ -50,8 +49,8 @@ public abstract class FriendlyTypeLiteral<T> extends TypeLiteral<T> {
    * @see TypeToken#where(TypeParameter, TypeToken)
    */
   // https://github.com/google/guice/issues/657
-  @Nonnull
-  public TypeLiteral<T> where(@Nonnull final TypeArgument<?>... args) {
+  @NonNull
+  public TypeLiteral<T> where(@NonNull final TypeArgument<?>... args) {
     // convert this literal into a token so we can use the type resolver
     TypeToken<T> token = EvenMoreTypes.token(this);
     for(final TypeArgument arg : args) {

@@ -27,10 +27,8 @@ import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.PrivateBinder;
 import com.google.inject.PrivateModule;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import net.kyori.blizzard.NonNull;
+import net.kyori.blizzard.Nullable;
 
 /**
  * A duplex binder is a {@link PrivateBinder} with access to the enclosing (public) environment
@@ -47,8 +45,8 @@ public interface DuplexBinder extends ForwardingPrivateBinder {
    * @param binder the enclosing (public) binder
    * @return a new duplex binder
    */
-  @Nonnull
-  static DuplexBinder create(@Nonnull final Binder binder) {
+  @NonNull
+  static DuplexBinder create(@NonNull final Binder binder) {
     if(binder instanceof DuplexBinder) {
       return (DuplexBinder) binder;
     }
@@ -60,7 +58,7 @@ public interface DuplexBinder extends ForwardingPrivateBinder {
    *
    * @return the binder of the enclosing environment
    */
-  @Nonnull
+  @NonNull
   Binder publicBinder();
 
   @Override
@@ -95,13 +93,13 @@ final class DuplexBinderImpl implements DuplexBinder {
     this.privateBinder = (privateBinder instanceof DuplexBinder ? ((DuplexBinder) privateBinder).binder() : privateBinder).skipSources(SKIPPED_SOURCES);
   }
 
-  @Nonnull
+  @NonNull
   @Override
   public Binder publicBinder() {
     return this.publicBinder;
   }
 
-  @Nonnull
+  @NonNull
   @Override
   public PrivateBinder binder() {
     return this.privateBinder;
@@ -118,12 +116,12 @@ final class DuplexBinderImpl implements DuplexBinder {
     }
   }
 
-  @CheckForNull
-  static DuplexBinder activeBinder(@Nonnull final Binder binder) {
+  @Nullable
+  static DuplexBinder activeBinder(@NonNull final Binder binder) {
     if(binder instanceof DuplexBinder) {
       return (DuplexBinder) binder;
     }
-    @CheckForNull final DuplexBinderImpl activeBinder = ACTIVE_BINDER.get();
+    @Nullable final DuplexBinderImpl activeBinder = ACTIVE_BINDER.get();
     if(activeBinder != null && activeBinder.privateBinder == binder) {
       return activeBinder;
     }

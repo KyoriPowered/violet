@@ -27,8 +27,7 @@ import com.google.common.reflect.TypeParameter;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
-
-import javax.annotation.Nonnull;
+import net.kyori.blizzard.NonNull;
 
 /**
  * A {@link TypeParameter} which contains the type argument.
@@ -45,21 +44,21 @@ public abstract class TypeArgument<T> extends TypeParameter<T> {
   /**
    * The actual type.
    */
-  @Nonnull final TypeToken<? extends T> actual;
+  @NonNull final TypeToken<? extends T> actual;
 
-  public TypeArgument(@Nonnull final Key<? extends T> key) {
+  public TypeArgument(@NonNull final Key<? extends T> key) {
     this(key.getTypeLiteral());
   }
 
-  public TypeArgument(@Nonnull final Class<? extends T> actual) {
+  public TypeArgument(@NonNull final Class<? extends T> actual) {
     this(TypeToken.of(actual));
   }
 
-  public TypeArgument(@Nonnull final TypeLiteral<? extends T> actual) {
+  public TypeArgument(@NonNull final TypeLiteral<? extends T> actual) {
     this(EvenMoreTypes.token(actual));
   }
 
-  public TypeArgument(@Nonnull final TypeToken<? extends T> actual) {
+  public TypeArgument(@NonNull final TypeToken<? extends T> actual) {
     this.actual = actual;
   }
 }

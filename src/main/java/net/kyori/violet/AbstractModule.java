@@ -25,9 +25,8 @@ package net.kyori.violet;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import net.kyori.blizzard.NonNull;
+import net.kyori.blizzard.Nullable;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -57,7 +56,7 @@ public abstract class AbstractModule implements Module, VBinder {
    */
   protected abstract void configure();
 
-  @Nonnull
+  @NonNull
   @Override
   public Binder binder() {
     checkState(this.binder != null, "The binder can only be used inside configure()");

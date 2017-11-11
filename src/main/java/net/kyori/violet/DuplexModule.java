@@ -26,9 +26,8 @@ package net.kyori.violet;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.PrivateModule;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import net.kyori.blizzard.NonNull;
+import net.kyori.blizzard.Nullable;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -91,7 +90,7 @@ public abstract class DuplexModule implements Module, VDuplexBinder {
    */
   protected abstract void configure();
 
-  @Nonnull
+  @NonNull
   @Override
   public DuplexBinder binder() {
     checkState(this.binder != null, "The binder can only be used inside configure()");

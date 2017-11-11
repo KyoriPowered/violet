@@ -25,10 +25,9 @@ package net.kyori.violet;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import net.kyori.blizzard.NonNull;
 
 import java.util.function.Supplier;
-
-import javax.annotation.Nonnull;
 
 /**
  * A lazily-loaded dependency.
@@ -46,7 +45,7 @@ public class Lazy<T> implements Provider<T>, Supplier<T> {
   private boolean loaded;
 
   @Inject
-  Lazy(@Nonnull final Provider<T> provider) {
+  Lazy(@NonNull final Provider<T> provider) {
     this.provider = provider;
   }
 

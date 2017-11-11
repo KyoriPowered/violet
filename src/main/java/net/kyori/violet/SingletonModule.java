@@ -24,8 +24,7 @@
 package net.kyori.violet;
 
 import com.google.inject.Module;
-
-import javax.annotation.Nullable;
+import net.kyori.blizzard.Nullable;
 
 /**
  * A {@link Module} which uses the concrete module class as the deduplication key.

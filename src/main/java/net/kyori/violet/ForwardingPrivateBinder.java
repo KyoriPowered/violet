@@ -27,8 +27,7 @@ import com.google.inject.Key;
 import com.google.inject.PrivateBinder;
 import com.google.inject.TypeLiteral;
 import com.google.inject.binder.AnnotatedElementBuilder;
-
-import javax.annotation.Nonnull;
+import net.kyori.blizzard.NonNull;
 
 /**
  * A private binder which forwards all its method calls to another private binder.
@@ -40,7 +39,7 @@ public interface ForwardingPrivateBinder extends ForwardingBinder, PrivateBinder
    *
    * @return the forwarded private binder
    */
-  @Nonnull
+  @NonNull
   @Override
   PrivateBinder binder();
 

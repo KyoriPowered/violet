@@ -43,12 +43,11 @@ import com.google.inject.spi.ModuleAnnotatedMethodScanner;
 import com.google.inject.spi.ProvisionListener;
 import com.google.inject.spi.TypeConverter;
 import com.google.inject.spi.TypeListener;
+import net.kyori.blizzard.NonNull;
 import org.aopalliance.intercept.MethodInterceptor;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-
-import javax.annotation.Nonnull;
 
 /**
  * A binder which forwards all its method calls to another binder.
@@ -60,7 +59,7 @@ public interface ForwardingBinder extends Binder {
    *
    * @return the forwarded binder
    */
-  @Nonnull
+  @NonNull
   Binder binder();
 
   @Override

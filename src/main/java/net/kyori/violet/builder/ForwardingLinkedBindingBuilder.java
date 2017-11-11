@@ -29,11 +29,10 @@ import com.google.inject.Scope;
 import com.google.inject.TypeLiteral;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.binder.ScopedBindingBuilder;
+import net.kyori.blizzard.NonNull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
-
-import javax.annotation.Nonnull;
 
 /**
  * A linked binding builder which forwards all its method calls to another linked binding builder.
@@ -45,7 +44,7 @@ public interface ForwardingLinkedBindingBuilder<T> extends LinkedBindingBuilder<
    *
    * @return the forwarded linked binding builder
    */
-  @Nonnull
+  @NonNull
   LinkedBindingBuilder<T> builder();
 
   @Override

@@ -28,11 +28,10 @@ import com.google.inject.Key;
 import com.google.inject.Provider;
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.binder.LinkedBindingBuilder;
+import net.kyori.blizzard.NonNull;
 import net.kyori.violet.builder.ForwardingLinkedBindingBuilder;
 
 import java.lang.annotation.Annotation;
-
-import javax.annotation.Nonnull;
 
 final class LazyBindingBuilder<T> implements AnnotatedBindingBuilder<T>, ForwardingLinkedBindingBuilder<T> {
 
@@ -46,7 +45,7 @@ final class LazyBindingBuilder<T> implements AnnotatedBindingBuilder<T>, Forward
     this.key = key;
   }
 
-  @Nonnull
+  @NonNull
   @Override
   public LinkedBindingBuilder<T> builder() {
     return this.binder.bind(this.key);

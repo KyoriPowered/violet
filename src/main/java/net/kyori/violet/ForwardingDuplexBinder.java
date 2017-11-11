@@ -24,8 +24,7 @@
 package net.kyori.violet;
 
 import com.google.inject.Binder;
-
-import javax.annotation.Nonnull;
+import net.kyori.blizzard.NonNull;
 
 /**
  * A duplex binder which forwards all its method calls to another duplex binder.
@@ -37,11 +36,11 @@ public interface ForwardingDuplexBinder extends ForwardingPrivateBinder, DuplexB
    *
    * @return the forwarded duplex binder
    */
-  @Nonnull
+  @NonNull
   @Override
   DuplexBinder binder();
 
-  @Nonnull
+  @NonNull
   @Override
   default Binder publicBinder() {
     return this.binder().publicBinder();

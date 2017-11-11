@@ -29,11 +29,10 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
+import net.kyori.blizzard.NonNull;
 
 import java.util.Set;
 import java.util.function.Consumer;
-
-import javax.annotation.Nonnull;
 
 /**
  * An extension of a {@link Binder} to provide additional helper methods.
@@ -46,8 +45,8 @@ public interface VBinder extends ForwardingBinder {
    * @param binder the binder
    * @return a wrapped binder
    */
-  @Nonnull
-  static VBinder of(@Nonnull final Binder binder) {
+  @NonNull
+  static VBinder of(@NonNull final Binder binder) {
     // avoid re-wrapping
     if(binder instanceof VBinder) {
       return (VBinder) binder;
@@ -79,8 +78,8 @@ public interface VBinder extends ForwardingBinder {
    * @return a new multibinder
    * @see Multibinder#newSetBinder(Binder, Key)
    */
-  @Nonnull
-  default <T> Multibinder<T> inSet(@Nonnull final Key<T> key) {
+  @NonNull
+  default <T> Multibinder<T> inSet(@NonNull final Key<T> key) {
     return Multibinder.newSetBinder(this.binder(), key);
   }
 
@@ -93,8 +92,8 @@ public interface VBinder extends ForwardingBinder {
    * @return a new multibinder
    * @see Multibinder#newSetBinder(Binder, TypeLiteral)
    */
-  @Nonnull
-  default <T> Multibinder<T> inSet(@Nonnull final TypeLiteral<T> type) {
+  @NonNull
+  default <T> Multibinder<T> inSet(@NonNull final TypeLiteral<T> type) {
     return this.inSet(Key.get(type));
   }
 
@@ -107,8 +106,8 @@ public interface VBinder extends ForwardingBinder {
    * @return a new multibinder
    * @see Multibinder#newSetBinder(Binder, Class)
    */
-  @Nonnull
-  default <T> Multibinder<T> inSet(@Nonnull final Class<T> type) {
+  @NonNull
+  default <T> Multibinder<T> inSet(@NonNull final Class<T> type) {
     return this.inSet(Key.get(type));
   }
 
@@ -119,7 +118,7 @@ public interface VBinder extends ForwardingBinder {
    * @param <T> the type of object
    * @see FactoryModuleBuilder#build(Key)
    */
-  default <T> void installFactory(@Nonnull final Key<T> key) {
+  default <T> void installFactory(@NonNull final Key<T> key) {
     this.install(new FactoryModuleBuilder().build(key));
   }
 
@@ -130,7 +129,7 @@ public interface VBinder extends ForwardingBinder {
    * @param <T> the type of object
    * @see FactoryModuleBuilder#build(TypeLiteral)
    */
-  default <T> void installFactory(@Nonnull final TypeLiteral<T> type) {
+  default <T> void installFactory(@NonNull final TypeLiteral<T> type) {
     this.installFactory(Key.get(type));
   }
 
@@ -141,7 +140,7 @@ public interface VBinder extends ForwardingBinder {
    * @param <T> the type of object
    * @see FactoryModuleBuilder#build(Class)
    */
-  default <T> void installFactory(@Nonnull final Class<T> type) {
+  default <T> void installFactory(@NonNull final Class<T> type) {
     this.installFactory(Key.get(type));
   }
 
@@ -153,7 +152,7 @@ public interface VBinder extends ForwardingBinder {
    * @param <T> the type of object
    * @see FactoryModuleBuilder#build(Key)
    */
-  default <T> void installFactory(@Nonnull final Key<T> key, @Nonnull final Consumer<FactoryModuleBuilder> consumer) {
+  default <T> void installFactory(@NonNull final Key<T> key, @NonNull final Consumer<FactoryModuleBuilder> consumer) {
     final FactoryModuleBuilder builder = new FactoryModuleBuilder();
     consumer.accept(builder);
     this.install(builder.build(key));
@@ -167,7 +166,7 @@ public interface VBinder extends ForwardingBinder {
    * @param <T> the type of object
    * @see FactoryModuleBuilder#build(TypeLiteral)
    */
-  default <T> void installFactory(@Nonnull final TypeLiteral<T> type, @Nonnull final Consumer<FactoryModuleBuilder> consumer) {
+  default <T> void installFactory(@NonNull final TypeLiteral<T> type, @NonNull final Consumer<FactoryModuleBuilder> consumer) {
     this.installFactory(Key.get(type), consumer);
   }
 
@@ -179,7 +178,7 @@ public interface VBinder extends ForwardingBinder {
    * @param <T> the type of object
    * @see FactoryModuleBuilder#build(TypeLiteral)
    */
-  default <T> void installFactory(@Nonnull final Class<T> type, @Nonnull final Consumer<FactoryModuleBuilder> consumer) {
+  default <T> void installFactory(@NonNull final Class<T> type, @NonNull final Consumer<FactoryModuleBuilder> consumer) {
     this.installFactory(Key.get(type), consumer);
   }
 
@@ -191,8 +190,8 @@ public interface VBinder extends ForwardingBinder {
    * @return an annotated binding builder
    * @see Lazy
    */
-  @Nonnull
-  default <T> AnnotatedBindingBuilder<T> bindLazy(@Nonnull final Key<T> key) {
+  @NonNull
+  default <T> AnnotatedBindingBuilder<T> bindLazy(@NonNull final Key<T> key) {
     return new LazyBindingBuilder<>(this.binder(), key);
   }
 
@@ -204,8 +203,8 @@ public interface VBinder extends ForwardingBinder {
    * @return an annotated binding builder
    * @see Lazy
    */
-  @Nonnull
-  default <T> AnnotatedBindingBuilder<T> bindLazy(@Nonnull final TypeLiteral<T> type) {
+  @NonNull
+  default <T> AnnotatedBindingBuilder<T> bindLazy(@NonNull final TypeLiteral<T> type) {
     return this.bindLazy(Key.get(type));
   }
 
@@ -217,8 +216,8 @@ public interface VBinder extends ForwardingBinder {
    * @return an annotated binding builder
    * @see Lazy
    */
-  @Nonnull
-  default <T> AnnotatedBindingBuilder<T> bindLazy(@Nonnull final Class<T> type) {
+  @NonNull
+  default <T> AnnotatedBindingBuilder<T> bindLazy(@NonNull final Class<T> type) {
     return this.bindLazy(Key.get(type));
   }
 }
@@ -231,13 +230,13 @@ final class VBinderImpl implements VBinder {
     VBinder.class,
     VBinderImpl.class
   };
-  @Nonnull private final Binder binder;
+  @NonNull private final Binder binder;
 
-  VBinderImpl(@Nonnull final Binder binder) {
+  VBinderImpl(@NonNull final Binder binder) {
     this.binder = binder.skipSources(SKIPPED_SOURCES);
   }
 
-  @Nonnull
+  @NonNull
   @Override
   public Binder binder() {
     return this.binder;

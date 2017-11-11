@@ -23,7 +23,7 @@
  */
 package net.kyori.violet;
 
-import javax.annotation.Nonnull;
+import net.kyori.blizzard.NonNull;
 
 /**
  * An extension of a {@link DuplexBinder} to provide additional helper methods.
@@ -38,8 +38,8 @@ public interface VDuplexBinder extends ForwardingDuplexBinder, VPrivateBinder {
    * @param binder the duplex binder
    * @return a wrapped duplex binder
    */
-  @Nonnull
-  static VDuplexBinder of(@Nonnull final DuplexBinder binder) {
+  @NonNull
+  static VDuplexBinder of(@NonNull final DuplexBinder binder) {
     // avoid re-wrapping
     if(binder instanceof VDuplexBinder) {
       return (VDuplexBinder) binder;
@@ -72,13 +72,13 @@ final class VDuplexBinderImpl implements VDuplexBinder {
     VDuplexBinder.class,
     VDuplexBinderImpl.class
   };
-  @Nonnull private final DuplexBinder binder;
+  @NonNull private final DuplexBinder binder;
 
-  VDuplexBinderImpl(@Nonnull final DuplexBinder binder) {
+  VDuplexBinderImpl(@NonNull final DuplexBinder binder) {
     this.binder = binder.skipSources(SKIPPED_SOURCES);
   }
 
-  @Nonnull
+  @NonNull
   @Override
   public DuplexBinder binder() {
     return this.binder;

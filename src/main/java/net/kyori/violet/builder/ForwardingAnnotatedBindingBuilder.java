@@ -25,10 +25,9 @@ package net.kyori.violet.builder;
 
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.binder.LinkedBindingBuilder;
+import net.kyori.blizzard.NonNull;
 
 import java.lang.annotation.Annotation;
-
-import javax.annotation.Nonnull;
 
 /**
  * An annotated binding builder which forwards all its method calls to another annotated binding builder.
@@ -40,7 +39,7 @@ public interface ForwardingAnnotatedBindingBuilder<T> extends AnnotatedBindingBu
    *
    * @return the forwarded annotated binding builder
    */
-  @Nonnull
+  @NonNull
   @Override
   AnnotatedBindingBuilder<T> builder();
 
