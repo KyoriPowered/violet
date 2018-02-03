@@ -33,7 +33,6 @@ import net.kyori.blizzard.NonNull;
  * A private binder which forwards all its method calls to another private binder.
  */
 public interface ForwardingPrivateBinder extends ForwardingBinder, PrivateBinder {
-
   /**
    * Gets the forwarded private binder that methods are forwarded to.
    *

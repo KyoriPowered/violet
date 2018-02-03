@@ -24,24 +24,23 @@
 package net.kyori.violet;
 
 import com.google.inject.TypeLiteral;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TypeLiteralsTest {
-
+class TypeLiteralsTest {
   @Test
-  public void testListOf() {
+  void testListOf() {
     assertEquals(new TypeLiteral<List<String>>() {}, TypeLiterals.listOf(String.class));
     assertEquals(new TypeLiteral<List<String>>() {}, TypeLiterals.listOf(new TypeLiteral<String>() {}));
   }
 
   @Test
-  public void testMapOf() {
+  void testMapOf() {
     assertEquals(new TypeLiteral<Map<String, String>>() {}, TypeLiterals.mapOf(String.class, String.class));
     assertEquals(new TypeLiteral<Map<String, String>>() {}, TypeLiterals.mapOf(String.class, new TypeLiteral<String>() {}));
     assertEquals(new TypeLiteral<Map<String, String>>() {}, TypeLiterals.mapOf(new TypeLiteral<String>() {}, String.class));
@@ -49,7 +48,7 @@ public class TypeLiteralsTest {
   }
 
   @Test
-  public void testSetOf() {
+  void testSetOf() {
     assertEquals(new TypeLiteral<Set<String>>() {}, TypeLiterals.setOf(String.class));
     assertEquals(new TypeLiteral<Set<String>>() {}, TypeLiterals.setOf(new TypeLiteral<String>() {}));
   }

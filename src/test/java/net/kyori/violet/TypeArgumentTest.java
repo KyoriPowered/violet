@@ -25,22 +25,24 @@ package net.kyori.violet;
 
 import com.google.common.reflect.TypeToken;
 import com.google.inject.TypeLiteral;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TypeArgumentTest {
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testConcreteTypeRejected() {
-    new TypeArgument<String>(new TypeToken<String>() {}) {};
+class TypeArgumentTest {
+  @Test
+  void testConcreteTypeRejected() {
+    assertThrows(IllegalArgumentException.class, () -> {
+      new TypeArgument<String>(new TypeToken<String>() {}) {};
+    });
   }
 
   @Test
-  public <T> void testCaptureTypeParameter() throws NoSuchMethodException {
+  <T> void testCaptureTypeParameter() throws NoSuchMethodException {
     final TypeVariable<?> expected = TypeArgumentTest.class.getDeclaredMethod("testCaptureTypeParameter").getTypeParameters()[0];
     final Type actual = new TypeArgument<T>(new TypeLiteral<T>() {}) {}.actual.getType();
     assertEquals(expected, actual);

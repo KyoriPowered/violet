@@ -31,7 +31,6 @@ import net.kyori.blizzard.NonNull;
  * @see DuplexModule
  */
 public interface VDuplexBinder extends ForwardingDuplexBinder, VPrivateBinder {
-
   /**
    * Creates a wrapped duplex binder.
    *
@@ -59,7 +58,6 @@ public interface VDuplexBinder extends ForwardingDuplexBinder, VPrivateBinder {
 }
 
 final class VDuplexBinderImpl implements VDuplexBinder {
-
   // These sources should be skipped when identifying calling code.
   private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
     ForwardingBinder.class,

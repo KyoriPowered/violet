@@ -39,7 +39,6 @@ import java.util.function.Supplier;
  */
 // https://github.com/google/guice/issues/852
 public class Lazy<T> implements Provider<T>, Supplier<T> {
-
   private final Provider<T> provider;
   private T value;
   private boolean loaded;

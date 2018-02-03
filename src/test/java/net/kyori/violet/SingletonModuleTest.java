@@ -25,14 +25,13 @@ package net.kyori.violet;
 
 import com.google.inject.CreationException;
 import com.google.inject.Guice;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class SingletonModuleTest {
-
+class SingletonModuleTest {
   @Test
-  public void testDuplicateBindExpectedException() {
+  void testDuplicateBindExpectedException() {
     try {
       Guice.createInjector(new TestAbstractModule(), new TestAbstractModule());
     } catch(final CreationException expected) {
@@ -44,12 +43,12 @@ public class SingletonModuleTest {
   }
 
   @Test
-  public void testInjectorCreation() {
+  void testInjectorCreation() {
     Guice.createInjector(new TestSingletonModule(), new TestSingletonModule());
   }
 
   @Test
-  public void testModuleInstallation() {
+  void testModuleInstallation() {
     Guice.createInjector(new com.google.inject.AbstractModule() {
       @Override
       protected void configure() {
@@ -63,7 +62,6 @@ public class SingletonModuleTest {
   private static class ThingA implements Thing {}
 
   private static final class TestSingletonModule extends SingletonModule {
-
     @Override
     protected void configure() {
       this.bind(Thing.class).toInstance(new ThingA());
@@ -71,7 +69,6 @@ public class SingletonModuleTest {
   }
 
   private static final class TestAbstractModule extends com.google.inject.AbstractModule {
-
     @Override
     protected void configure() {
       this.bind(Thing.class).toInstance(new ThingA());

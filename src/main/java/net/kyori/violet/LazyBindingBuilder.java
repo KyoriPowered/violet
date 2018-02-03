@@ -34,7 +34,6 @@ import net.kyori.violet.builder.ForwardingLinkedBindingBuilder;
 import java.lang.annotation.Annotation;
 
 final class LazyBindingBuilder<T> implements AnnotatedBindingBuilder<T>, ForwardingLinkedBindingBuilder<T> {
-
   private final Binder binder;
   private final AnnotatedBindingBuilder<Lazy<T>> builder;
   private final Key<T> key;

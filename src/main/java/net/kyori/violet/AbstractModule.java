@@ -37,7 +37,6 @@ import static com.google.common.base.Preconditions.checkState;
  * @see com.google.inject.AbstractModule
  */
 public abstract class AbstractModule implements Module, VBinder {
-
   @Nullable private Binder binder;
 
   @Override

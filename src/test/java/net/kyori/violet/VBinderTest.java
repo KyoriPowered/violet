@@ -28,19 +28,18 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.assistedinject.Assisted;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // TODO: test VDuplexBinder and VPrivateBinder
-public class VBinderTest {
-
+class VBinderTest {
   @Test
-  public void testInSet() {
+  void testInSet() {
     final Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -58,7 +57,7 @@ public class VBinderTest {
   }
 
   @Test
-  public void testExposed() {
+  void testExposed() {
     final Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -77,7 +76,7 @@ public class VBinderTest {
   }
 
   @Test
-  public void testFactory() {
+  void testFactory() {
     final Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -96,23 +95,19 @@ public class VBinderTest {
   private @interface ThingAnnotation {}
 
   private static class Things {
-
     @Inject Set<Thing> things;
   }
 
   private static class ExposeThings {
-
     @Inject Thing a;
     @Inject @ThingAnnotation Thing b;
   }
 
   private interface FooThing {
-
     int value();
   }
 
   private static class FooThingImpl implements FooThing {
-
     final int value;
 
     @Inject
@@ -127,12 +122,10 @@ public class VBinderTest {
   }
 
   private interface FooThingFactory {
-
     FooThing create(final int value);
   }
 
   private static class FooThings {
-
     @Inject FooThingFactory factory;
   }
 }

@@ -25,24 +25,23 @@ package net.kyori.violet;
 
 import com.google.common.reflect.TypeToken;
 import com.google.inject.TypeLiteral;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EvenMoreTypesTest {
-
+class EvenMoreTypesTest {
   @Test
-  public void testLiteralToToken() {
+  void testLiteralToToken() {
     final TypeLiteral<Map<String, List<String>>> literal = new TypeLiteral<Map<String, List<String>>>() {};
     final TypeToken<Map<String, List<String>>> token = EvenMoreTypes.token(literal);
     assertEquals(literal.getType(), token.getType());
   }
 
   @Test
-  public void testTokenToLiteral() {
+  void testTokenToLiteral() {
     final TypeToken<Map<String, List<String>>> token = new TypeToken<Map<String, List<String>>>() {};
     final TypeLiteral<Map<String, List<String>>> literal = EvenMoreTypes.literal(token);
     assertEquals(token.getType(), literal.getType());

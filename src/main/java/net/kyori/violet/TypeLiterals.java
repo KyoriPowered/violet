@@ -37,7 +37,6 @@ import java.util.Set;
  * A collection of methods for constructing common parameterized type literals.
  */
 public interface TypeLiterals {
-
   /**
    * Creates a type literal representing a {@link Collection} whose elements are of type {@code type}.
    *

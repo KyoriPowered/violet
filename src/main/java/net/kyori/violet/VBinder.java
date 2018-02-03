@@ -38,7 +38,6 @@ import java.util.function.Consumer;
  * An extension of a {@link Binder} to provide additional helper methods.
  */
 public interface VBinder extends ForwardingBinder {
-
   /**
    * Creates a wrapped binder.
    *
@@ -223,7 +222,6 @@ public interface VBinder extends ForwardingBinder {
 }
 
 final class VBinderImpl implements VBinder {
-
   // These sources should be skipped when identifying calling code.
   private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
     ForwardingBinder.class,

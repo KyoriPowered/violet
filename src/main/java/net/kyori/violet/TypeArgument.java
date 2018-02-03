@@ -40,7 +40,6 @@ import net.kyori.blizzard.NonNull;
  * @see TypeToken#where(TypeParameter, TypeToken)
  */
 public abstract class TypeArgument<T> extends TypeParameter<T> {
-
   /**
    * The actual type.
    */

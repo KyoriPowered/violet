@@ -28,18 +28,17 @@ import com.google.inject.ConfigurationException;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.name.Names;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class DuplexTest {
-
+class DuplexTest {
   @Test
-  public void testStandard() {
+  void testStandard() {
     final Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -77,7 +76,7 @@ public class DuplexTest {
   }
 
   @Test
-  public void testNotExposed() {
+  void testNotExposed() {
     final Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -102,7 +101,6 @@ public class DuplexTest {
   }
 
   private static class Thing {
-
     final String id;
 
     Thing(final String id) {
@@ -111,7 +109,6 @@ public class DuplexTest {
   }
 
   private static class Things {
-
     @Inject @Named("p0") Thing p0;
     @Inject @Named("d0") Thing d0;
     @Inject @Named("d1") Thing d1;
@@ -119,7 +116,6 @@ public class DuplexTest {
   }
 
   private static class ShouldNotWork {
-
     @Inject @Named("r0") Thing r0;
   }
 }

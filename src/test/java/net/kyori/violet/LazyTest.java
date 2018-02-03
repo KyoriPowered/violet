@@ -28,21 +28,20 @@ import com.google.inject.Injector;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
-public class LazyTest {
-
+class LazyTest {
   @Test
-  public void testLazy() {
+  void testLazy() {
     final Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -59,14 +58,14 @@ public class LazyTest {
     assertSame(things.dl.get(), things.dl.get());
   }
 
-  @Before
-  public void resetCount() {
+  @BeforeEach
+  void resetCount() {
     SingletonThing.CONSTRUCTION_COUNT.set(0);
     AnnotatedSingletonThing.CONSTRUCTION_COUNT.set(0);
   }
 
   @Test
-  public void testSingletonBoundScope() {
+  void testSingletonBoundScope() {
     final Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -83,7 +82,7 @@ public class LazyTest {
   }
 
   @Test
-  public void testSingletonBoundScopeProvider() {
+  void testSingletonBoundScopeProvider() {
     final Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -102,7 +101,7 @@ public class LazyTest {
   }
 
   @Test
-  public void testSingletonInScope() {
+  void testSingletonInScope() {
     final Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       public void configure() {
@@ -119,7 +118,7 @@ public class LazyTest {
   }
 
   @Test
-  public void testSingletonInScopeProvider() {
+  void testSingletonInScopeProvider() {
     final Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
@@ -144,7 +143,6 @@ public class LazyTest {
   private static class ThingD {}
 
   private static class Things {
-
     @Inject Provider<Thing> ap;
     @Inject Lazy<Thing> al;
     @Inject @Named("b") Lazy<Thing> bl;
@@ -154,7 +152,6 @@ public class LazyTest {
 
   // not annotated
   private static class SingletonThing {
-
     static final AtomicInteger CONSTRUCTION_COUNT = new AtomicInteger();
 
     private SingletonThing() {
@@ -163,13 +160,11 @@ public class LazyTest {
   }
 
   private static class SingletonThingProvider {
-
     @Inject Provider<SingletonThing> provider;
   }
 
   @LazySingleton
   private static class AnnotatedSingletonThing {
-
     static final AtomicInteger CONSTRUCTION_COUNT = new AtomicInteger();
 
     private AnnotatedSingletonThing() {
@@ -178,7 +173,6 @@ public class LazyTest {
   }
 
   private static class AnnotatedSingletonThingProvider {
-
     @Inject Provider<AnnotatedSingletonThing> provider;
   }
 }

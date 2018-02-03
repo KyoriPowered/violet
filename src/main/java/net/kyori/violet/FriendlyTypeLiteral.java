@@ -39,7 +39,6 @@ import java.lang.reflect.Type;
  * @param <T> the type
  */
 public abstract class FriendlyTypeLiteral<T> extends TypeLiteral<T> {
-
   /**
    * Creates a type literal by substituting formal type variables with the given actual type arguments.
    *
