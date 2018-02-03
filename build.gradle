@@ -26,13 +26,16 @@ license {
 repositories {
   mavenLocal()
   mavenCentral()
+  maven {
+    name 'sonatype-oss'
+    url 'https://oss.sonatype.org/content/groups/public/'
+  }
 }
 
 dependencies {
   compile 'net.kyori:blizzard:1.0.4-JDK8144185'
-  compile 'com.google.inject:guice:4.1.0'
-  compile 'com.google.inject.extensions:guice-assistedinject:4.1.0'
-  compile 'com.google.inject.extensions:guice-multibindings:4.1.0'
+  compile 'com.google.inject:guice:4.1.1-SNAPSHOT'
+  compile 'com.google.inject.extensions:guice-assistedinject:4.1.1-SNAPSHOT'
   testCompile 'junit:junit:4.12'
 }
 
