@@ -30,7 +30,6 @@ import net.kyori.blizzard.NonNull;
  * A duplex binder which forwards all its method calls to another duplex binder.
  */
 public interface ForwardingDuplexBinder extends ForwardingPrivateBinder, DuplexBinder {
-
   /**
    * Gets the forwarded duplex binder that methods are forwarded to.
    *

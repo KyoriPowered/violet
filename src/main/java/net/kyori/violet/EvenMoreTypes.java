@@ -34,7 +34,6 @@ import net.kyori.blizzard.NonNull;
  * @see MoreTypes
  */
 public final class EvenMoreTypes {
-
   private EvenMoreTypes() {
   }
 

@@ -53,7 +53,6 @@ import java.lang.reflect.Method;
  * A binder which forwards all its method calls to another binder.
  */
 public interface ForwardingBinder extends Binder {
-
   /**
    * Gets the forwarded binder that methods are forwarded to.
    *

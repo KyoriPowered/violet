@@ -37,7 +37,6 @@ import net.kyori.blizzard.NonNull;
 // Unfortunately it is not possible to create our own AbstractPrivateModule without
 // making changes to guice itself, as guice special-cases PrivateModule
 public interface VPrivateBinder extends ForwardingPrivateBinder, VBinder {
-
   /**
    * Creates a wrapped private binder.
    *
@@ -108,7 +107,6 @@ public interface VPrivateBinder extends ForwardingPrivateBinder, VBinder {
 }
 
 final class VPrivateBinderImpl implements VPrivateBinder {
-
   // These sources should be skipped when identifying calling code.
   private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
     ForwardingBinder.class,

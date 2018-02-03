@@ -51,7 +51,6 @@ import java.lang.annotation.Target;
 @ScopeAnnotation
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface LazySingleton {
-
   /**
    * A scope that enables lazy singletons.
    *

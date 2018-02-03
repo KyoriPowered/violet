@@ -42,7 +42,6 @@ import java.lang.annotation.Annotation;
  */
 // TODO(kashike): better name?
 final class BindAndExposeBindingBuilder<T> implements ForwardingAnnotatedBindingBuilder<T> {
-
   private final AnnotatedBindingBuilder<T> bind;
   private final AnnotatedElementBuilder expose;
 

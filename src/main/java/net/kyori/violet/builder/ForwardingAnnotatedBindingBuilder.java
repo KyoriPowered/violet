@@ -33,7 +33,6 @@ import java.lang.annotation.Annotation;
  * An annotated binding builder which forwards all its method calls to another annotated binding builder.
  */
 public interface ForwardingAnnotatedBindingBuilder<T> extends AnnotatedBindingBuilder<T>, ForwardingLinkedBindingBuilder<T> {
-
   /**
    * Gets the forwarded annotated binding builder that methods are forwarded to.
    *

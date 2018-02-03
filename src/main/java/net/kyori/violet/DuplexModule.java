@@ -63,7 +63,6 @@ import static com.google.common.base.Preconditions.checkState;
  */
 // https://github.com/google/guice/issues/369#issuecomment-48217990
 public abstract class DuplexModule implements Module, VDuplexBinder {
-
   @Nullable private DuplexBinder binder;
 
   @Override

@@ -31,7 +31,6 @@ import net.kyori.blizzard.Nullable;
  */
 // TODO(kashike): require singleton modules to be final?
 public abstract class SingletonModule extends AbstractModule {
-
   @Override
   public final int hashCode() {
     return this.getClass().hashCode();

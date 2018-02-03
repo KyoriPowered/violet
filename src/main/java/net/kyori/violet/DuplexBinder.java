@@ -38,7 +38,6 @@ import net.kyori.blizzard.Nullable;
  * @see DuplexModule
  */
 public interface DuplexBinder extends ForwardingPrivateBinder {
-
   /**
    * Creates a new duplex binder.
    *
@@ -73,7 +72,6 @@ public interface DuplexBinder extends ForwardingPrivateBinder {
 }
 
 final class DuplexBinderImpl implements DuplexBinder {
-
   // These sources should be skipped when identifying calling code.
   private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
     ForwardingBinder.class,
