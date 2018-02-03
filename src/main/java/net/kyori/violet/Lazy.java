@@ -24,10 +24,11 @@
 package net.kyori.violet;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import net.kyori.blizzard.NonNull;
 
 import java.util.function.Supplier;
+
+import javax.inject.Provider;
 
 /**
  * A lazily-loaded dependency.
