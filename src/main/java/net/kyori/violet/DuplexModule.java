@@ -87,7 +87,8 @@ public abstract class DuplexModule implements Module, VDuplexBinder {
   /**
    * Configures a {@link Binder} via the exposed methods.
    */
-  protected abstract void configure();
+  protected void configure() {
+  }
 
   @NonNull
   @Override
