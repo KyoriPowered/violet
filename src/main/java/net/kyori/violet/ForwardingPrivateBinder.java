@@ -27,7 +27,7 @@ import com.google.inject.Key;
 import com.google.inject.PrivateBinder;
 import com.google.inject.TypeLiteral;
 import com.google.inject.binder.AnnotatedElementBuilder;
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A private binder which forwards all its method calls to another private binder.
@@ -38,9 +38,8 @@ public interface ForwardingPrivateBinder extends ForwardingBinder, PrivateBinder
    *
    * @return the forwarded private binder
    */
-  @NonNull
   @Override
-  PrivateBinder binder();
+  @NonNull PrivateBinder binder();
 
   @Override
   default void expose(final Key<?> key) {

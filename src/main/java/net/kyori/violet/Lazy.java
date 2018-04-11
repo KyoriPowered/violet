@@ -24,7 +24,7 @@
 package net.kyori.violet;
 
 import com.google.inject.Inject;
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.function.Supplier;
 
@@ -45,7 +45,7 @@ public class Lazy<T> implements Provider<T>, Supplier<T> {
   private boolean loaded;
 
   @Inject
-  public Lazy(@NonNull final Provider<T> provider) {
+  public Lazy(final @NonNull Provider<T> provider) {
     this.provider = provider;
   }
 

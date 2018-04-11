@@ -25,33 +25,27 @@ package net.kyori.violet;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * An extension of a {@link DuplexBinder} to provide additional helper methods.
- *
- * @see DuplexModule
- */
-public interface VDuplexBinder extends ForwardingDuplexBinder, VPrivateBinder {
-  /**
-   * Creates a wrapped duplex binder.
-   *
-   * @param binder the duplex binder
-   * @return a wrapped duplex binder
-   */
-  static @NonNull VDuplexBinder of(final @NonNull DuplexBinder binder) {
-    // avoid re-wrapping
-    if(binder instanceof VDuplexBinder) {
-      return (VDuplexBinder) binder;
-    }
-    return new VDuplexBinderImpl(binder);
+final class VDuplexBinderImpl implements VDuplexBinder {
+  // These sources should be skipped when identifying calling code.
+  private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
+    ForwardingBinder.class,
+    ForwardingPrivateBinder.class,
+    ForwardingDuplexBinder.class,
+    VBinder.class,
+    VBinderImpl.class,
+    VPrivateBinder.class,
+    VPrivateBinderImpl.class,
+    VDuplexBinder.class,
+    VDuplexBinderImpl.class
+  };
+  private final @NonNull DuplexBinder binder;
+
+  VDuplexBinderImpl(final @NonNull DuplexBinder binder) {
+    this.binder = binder.skipSources(SKIPPED_SOURCES);
   }
 
   @Override
-  default VDuplexBinder withSource(final Object source) {
-    return of(ForwardingDuplexBinder.super.withSource(source));
-  }
-
-  @Override
-  default VDuplexBinder skipSources(final Class... classesToSkip) {
-    return of(ForwardingDuplexBinder.super.skipSources(classesToSkip));
+  public @NonNull DuplexBinder binder() {
+    return this.binder;
   }
 }

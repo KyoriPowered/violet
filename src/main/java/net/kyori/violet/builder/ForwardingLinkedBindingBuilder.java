@@ -29,7 +29,7 @@ import com.google.inject.Scope;
 import com.google.inject.TypeLiteral;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.binder.ScopedBindingBuilder;
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -43,8 +43,7 @@ public interface ForwardingLinkedBindingBuilder<T> extends LinkedBindingBuilder<
    *
    * @return the forwarded linked binding builder
    */
-  @NonNull
-  LinkedBindingBuilder<T> builder();
+  @NonNull LinkedBindingBuilder<T> builder();
 
   @Override
   default ScopedBindingBuilder to(final Class<? extends T> implementation) {

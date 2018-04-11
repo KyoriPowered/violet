@@ -24,7 +24,7 @@
 package net.kyori.violet;
 
 import com.google.inject.Module;
-import net.kyori.blizzard.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A {@link Module} which uses the concrete module class as the deduplication key.
@@ -37,7 +37,7 @@ public abstract class SingletonModule extends AbstractModule {
   }
 
   @Override
-  public final boolean equals(@Nullable final Object that) {
+  public final boolean equals(final @Nullable Object that) {
     return that != null && this.getClass().equals(that.getClass());
   }
 }

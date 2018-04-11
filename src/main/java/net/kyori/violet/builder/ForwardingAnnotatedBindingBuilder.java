@@ -25,7 +25,7 @@ package net.kyori.violet.builder;
 
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.binder.LinkedBindingBuilder;
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.lang.annotation.Annotation;
 
@@ -38,9 +38,8 @@ public interface ForwardingAnnotatedBindingBuilder<T> extends AnnotatedBindingBu
    *
    * @return the forwarded annotated binding builder
    */
-  @NonNull
   @Override
-  AnnotatedBindingBuilder<T> builder();
+  @NonNull AnnotatedBindingBuilder<T> builder();
 
   @Override
   default LinkedBindingBuilder<T> annotatedWith(final Class<? extends Annotation> annotationType) {

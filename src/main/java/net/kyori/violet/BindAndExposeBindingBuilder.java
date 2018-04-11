@@ -27,8 +27,8 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.binder.AnnotatedElementBuilder;
 import com.google.inject.binder.LinkedBindingBuilder;
-import net.kyori.blizzard.NonNull;
 import net.kyori.violet.builder.ForwardingAnnotatedBindingBuilder;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.lang.annotation.Annotation;
 
@@ -50,9 +50,8 @@ final class BindAndExposeBindingBuilder<T> implements ForwardingAnnotatedBinding
     this.expose = expose;
   }
 
-  @NonNull
   @Override
-  public AnnotatedBindingBuilder<T> builder() {
+  public @NonNull AnnotatedBindingBuilder<T> builder() {
     return this.bind;
   }
 

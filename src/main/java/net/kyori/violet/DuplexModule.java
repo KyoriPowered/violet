@@ -26,8 +26,8 @@ package net.kyori.violet;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.PrivateModule;
-import net.kyori.blizzard.NonNull;
-import net.kyori.blizzard.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -63,7 +63,7 @@ import static com.google.common.base.Preconditions.checkState;
  */
 // https://github.com/google/guice/issues/369#issuecomment-48217990
 public abstract class DuplexModule implements Module, VDuplexBinder {
-  @Nullable private DuplexBinder binder;
+  private @Nullable DuplexBinder binder;
 
   @Override
   public final void configure(final Binder binder) {
@@ -90,9 +90,8 @@ public abstract class DuplexModule implements Module, VDuplexBinder {
   protected void configure() {
   }
 
-  @NonNull
   @Override
-  public DuplexBinder binder() {
+  public @NonNull DuplexBinder binder() {
     checkState(this.binder != null, "The binder can only be used inside configure()");
     return this.binder;
   }

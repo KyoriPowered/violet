@@ -28,8 +28,8 @@ import com.google.inject.Key;
 import com.google.inject.Provider;
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.binder.LinkedBindingBuilder;
-import net.kyori.blizzard.NonNull;
 import net.kyori.violet.builder.ForwardingLinkedBindingBuilder;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.lang.annotation.Annotation;
 
@@ -44,9 +44,8 @@ final class LazyBindingBuilder<T> implements AnnotatedBindingBuilder<T>, Forward
     this.key = key;
   }
 
-  @NonNull
   @Override
-  public LinkedBindingBuilder<T> builder() {
+  public @NonNull LinkedBindingBuilder<T> builder() {
     return this.binder.bind(this.key);
   }
 

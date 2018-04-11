@@ -43,8 +43,8 @@ import com.google.inject.spi.ModuleAnnotatedMethodScanner;
 import com.google.inject.spi.ProvisionListener;
 import com.google.inject.spi.TypeConverter;
 import com.google.inject.spi.TypeListener;
-import net.kyori.blizzard.NonNull;
 import org.aopalliance.intercept.MethodInterceptor;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -58,8 +58,7 @@ public interface ForwardingBinder extends Binder {
    *
    * @return the forwarded binder
    */
-  @NonNull
-  Binder binder();
+  @NonNull Binder binder();
 
   @Override
   default void bindInterceptor(final Matcher<? super Class<?>> classMatcher, final Matcher<? super Method> methodMatcher, final MethodInterceptor... interceptors) {
