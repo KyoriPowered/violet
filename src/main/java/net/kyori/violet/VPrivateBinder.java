@@ -29,7 +29,7 @@ import com.google.inject.PrivateBinder;
 import com.google.inject.TypeLiteral;
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.binder.LinkedBindingBuilder;
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * An extension of a {@link PrivateBinder} to provide additional helper methods.
@@ -43,8 +43,7 @@ public interface VPrivateBinder extends ForwardingPrivateBinder, VBinder {
    * @param binder the private binder
    * @return a wrapped private binder
    */
-  @NonNull
-  static VPrivateBinder of(@NonNull final PrivateBinder binder) {
+  static @NonNull VPrivateBinder of(final @NonNull PrivateBinder binder) {
     // avoid re-wrapping
     if(binder instanceof VPrivateBinder) {
       return (VPrivateBinder) binder;
@@ -71,8 +70,7 @@ public interface VPrivateBinder extends ForwardingPrivateBinder, VBinder {
    * @see Binder#bind(Key)
    * @see PrivateBinder#expose(Key)
    */
-  @NonNull
-  default <T> LinkedBindingBuilder<T> bindAndExpose(@NonNull final Key<T> key) {
+  default <T> @NonNull LinkedBindingBuilder<T> bindAndExpose(final @NonNull Key<T> key) {
     this.expose(key);
     return this.bind(key);
   }
@@ -86,8 +84,7 @@ public interface VPrivateBinder extends ForwardingPrivateBinder, VBinder {
    * @see Binder#bind(Class)
    * @see PrivateBinder#expose(Class)
    */
-  @NonNull
-  default <T> AnnotatedBindingBuilder<T> bindAndExpose(@NonNull final Class<T> type) {
+  default <T> @NonNull AnnotatedBindingBuilder<T> bindAndExpose(final @NonNull Class<T> type) {
     return this.bindAndExpose(TypeLiteral.get(type));
   }
 
@@ -100,31 +97,7 @@ public interface VPrivateBinder extends ForwardingPrivateBinder, VBinder {
    * @see Binder#bind(TypeLiteral)
    * @see PrivateBinder#expose(TypeLiteral)
    */
-  @NonNull
-  default <T> AnnotatedBindingBuilder<T> bindAndExpose(@NonNull final TypeLiteral<T> type) {
+  default <T> @NonNull AnnotatedBindingBuilder<T> bindAndExpose(final @NonNull TypeLiteral<T> type) {
     return new BindAndExposeBindingBuilder<>(this.bind(type), this.expose(type));
-  }
-}
-
-final class VPrivateBinderImpl implements VPrivateBinder {
-  // These sources should be skipped when identifying calling code.
-  private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
-    ForwardingBinder.class,
-    ForwardingPrivateBinder.class,
-    VBinder.class,
-    VBinderImpl.class,
-    VPrivateBinder.class,
-    VPrivateBinderImpl.class
-  };
-  @NonNull private final PrivateBinder binder;
-
-  VPrivateBinderImpl(@NonNull final PrivateBinder binder) {
-    this.binder = binder.skipSources(SKIPPED_SOURCES);
-  }
-
-  @NonNull
-  @Override
-  public PrivateBinder binder() {
-    return this.binder;
   }
 }

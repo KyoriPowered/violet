@@ -27,7 +27,7 @@ import com.google.common.reflect.TypeParameter;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A {@link TypeParameter} which contains the type argument.
@@ -43,21 +43,21 @@ public abstract class TypeArgument<T> extends TypeParameter<T> {
   /**
    * The actual type.
    */
-  @NonNull final TypeToken<? extends T> actual;
+  final @NonNull TypeToken<? extends T> actual;
 
-  public TypeArgument(@NonNull final Key<? extends T> key) {
+  public TypeArgument(final @NonNull Key<? extends T> key) {
     this(key.getTypeLiteral());
   }
 
-  public TypeArgument(@NonNull final Class<? extends T> actual) {
+  public TypeArgument(final @NonNull Class<? extends T> actual) {
     this(TypeToken.of(actual));
   }
 
-  public TypeArgument(@NonNull final TypeLiteral<? extends T> actual) {
+  public TypeArgument(final @NonNull TypeLiteral<? extends T> actual) {
     this(EvenMoreTypes.token(actual));
   }
 
-  public TypeArgument(@NonNull final TypeToken<? extends T> actual) {
+  public TypeArgument(final @NonNull TypeToken<? extends T> actual) {
     this.actual = actual;
   }
 }

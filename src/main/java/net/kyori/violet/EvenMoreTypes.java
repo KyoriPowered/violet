@@ -27,7 +27,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.inject.TypeLiteral;
 import com.google.inject.internal.MoreTypes;
 import com.google.inject.util.Types;
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * @see Types
@@ -44,8 +44,7 @@ public final class EvenMoreTypes {
    * @param <T> the type
    * @return the type literal
    */
-  @NonNull
-  public static <T> TypeLiteral<T> literal(@NonNull final TypeToken<T> token) {
+  public static <T> @NonNull TypeLiteral<T> literal(final @NonNull TypeToken<T> token) {
     return (TypeLiteral<T>) TypeLiteral.get(token.getType());
   }
 
@@ -56,8 +55,7 @@ public final class EvenMoreTypes {
    * @param <T> the type
    * @return the type token
    */
-  @NonNull
-  public static <T> TypeToken<T> token(@NonNull final TypeLiteral<T> literal) {
+  public static <T> @NonNull TypeToken<T> token(final @NonNull TypeLiteral<T> literal) {
     return (TypeToken<T>) TypeToken.of(literal.getType());
   }
 }

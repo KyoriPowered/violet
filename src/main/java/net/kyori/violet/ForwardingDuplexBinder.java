@@ -24,7 +24,7 @@
 package net.kyori.violet;
 
 import com.google.inject.Binder;
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A duplex binder which forwards all its method calls to another duplex binder.
@@ -35,13 +35,11 @@ public interface ForwardingDuplexBinder extends ForwardingPrivateBinder, DuplexB
    *
    * @return the forwarded duplex binder
    */
-  @NonNull
   @Override
-  DuplexBinder binder();
+  @NonNull DuplexBinder binder();
 
-  @NonNull
   @Override
-  default Binder publicBinder() {
+  default @NonNull Binder publicBinder() {
     return this.binder().publicBinder();
   }
 

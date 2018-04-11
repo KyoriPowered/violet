@@ -27,8 +27,8 @@ import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.PrivateBinder;
 import com.google.inject.PrivateModule;
-import net.kyori.blizzard.NonNull;
-import net.kyori.blizzard.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A duplex binder is a {@link PrivateBinder} with access to the enclosing (public) environment
@@ -44,8 +44,7 @@ public interface DuplexBinder extends ForwardingPrivateBinder {
    * @param binder the enclosing (public) binder
    * @return a new duplex binder
    */
-  @NonNull
-  static DuplexBinder create(@NonNull final Binder binder) {
+  static @NonNull DuplexBinder create(final @NonNull Binder binder) {
     if(binder instanceof DuplexBinder) {
       return (DuplexBinder) binder;
     }
@@ -57,8 +56,7 @@ public interface DuplexBinder extends ForwardingPrivateBinder {
    *
    * @return the binder of the enclosing environment
    */
-  @NonNull
-  Binder publicBinder();
+  @NonNull Binder publicBinder();
 
   @Override
   default DuplexBinder withSource(final Object source) {
@@ -68,61 +66,5 @@ public interface DuplexBinder extends ForwardingPrivateBinder {
   @Override
   default DuplexBinder skipSources(final Class... classesToSkip) {
     return new DuplexBinderImpl(this.publicBinder().skipSources(classesToSkip), this.binder().skipSources(classesToSkip));
-  }
-}
-
-final class DuplexBinderImpl implements DuplexBinder {
-  // These sources should be skipped when identifying calling code.
-  private static final Class<?>[] SKIPPED_SOURCES = new Class<?>[]{
-    ForwardingBinder.class,
-    ForwardingPrivateBinder.class,
-    ForwardingDuplexBinder.class,
-    DuplexBinder.class,
-    DuplexBinderImpl.class,
-    DuplexModule.class
-  };
-  private static final ThreadLocal<DuplexBinderImpl> ACTIVE_BINDER = new ThreadLocal<>();
-  private final Binder publicBinder;
-  private final PrivateBinder privateBinder;
-
-  DuplexBinderImpl(final Binder publicBinder, final PrivateBinder privateBinder) {
-    this.publicBinder = publicBinder.skipSources(SKIPPED_SOURCES);
-    // Special case DuplexBinder to prevent creation of a new DuplexBinderImpl when skipping sources
-    this.privateBinder = (privateBinder instanceof DuplexBinder ? ((DuplexBinder) privateBinder).binder() : privateBinder).skipSources(SKIPPED_SOURCES);
-  }
-
-  @NonNull
-  @Override
-  public Binder publicBinder() {
-    return this.publicBinder;
-  }
-
-  @NonNull
-  @Override
-  public PrivateBinder binder() {
-    return this.privateBinder;
-  }
-
-  @Override
-  public void install(final Module module) {
-    @Nullable final DuplexBinderImpl activeBinder = ACTIVE_BINDER.get();
-    ACTIVE_BINDER.set(this);
-    try {
-      this.privateBinder.install(module);
-    } finally {
-      ACTIVE_BINDER.set(activeBinder);
-    }
-  }
-
-  @Nullable
-  static DuplexBinder activeBinder(@NonNull final Binder binder) {
-    if(binder instanceof DuplexBinder) {
-      return (DuplexBinder) binder;
-    }
-    @Nullable final DuplexBinderImpl activeBinder = ACTIVE_BINDER.get();
-    if(activeBinder != null && activeBinder.privateBinder == binder) {
-      return activeBinder;
-    }
-    return null;
   }
 }

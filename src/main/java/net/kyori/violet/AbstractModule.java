@@ -25,8 +25,8 @@ package net.kyori.violet;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
-import net.kyori.blizzard.NonNull;
-import net.kyori.blizzard.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -37,7 +37,7 @@ import static com.google.common.base.Preconditions.checkState;
  * @see com.google.inject.AbstractModule
  */
 public abstract class AbstractModule implements Module, VBinder {
-  @Nullable private Binder binder;
+  private @Nullable Binder binder;
 
   @Override
   public final void configure(final Binder binder) {
@@ -55,9 +55,8 @@ public abstract class AbstractModule implements Module, VBinder {
    */
   protected abstract void configure();
 
-  @NonNull
   @Override
-  public Binder binder() {
+  public @NonNull Binder binder() {
     checkState(this.binder != null, "The binder can only be used inside configure()");
     return this.binder;
   }
