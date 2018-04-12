@@ -25,14 +25,16 @@ package net.kyori.violet;
 
 import com.google.inject.BindingAnnotation;
 import com.google.inject.Guice;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.assistedinject.Assisted;
 import org.junit.jupiter.api.Test;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Optional;
 import java.util.Set;
+
+import javax.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -80,11 +82,50 @@ class VBinderTest {
     final Injector injector = Guice.createInjector(new AbstractModule() {
       @Override
       protected void configure() {
-        this.installFactory(FooThingFactory.class, builder -> builder.implement(FooThing.class, FooThingImpl.class));
+        this.installFactory(FooThingFactory.class, builder -> builder.implement(FooThing.class, AssistedFooThing.class));
       }
     });
     final FooThings things = injector.getInstance(FooThings.class);
     assertEquals(100, things.factory.create(100).value());
+  }
+
+  @Test
+  void testOptionalDefault() {
+    assertEquals(4, Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        this.bindOptional(FooThing.class).setDefault().to(FooThing4.class);
+      }
+    }).getInstance(FooThing.class).value());
+  }
+
+  @Test
+  void testOptionalBound() {
+    assertEquals(8, Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        this.bindOptional(FooThing.class).setDefault().to(FooThing4.class);
+      }
+    }, new AbstractModule() {
+      @Override
+      protected void configure() {
+        this.bindOptional(FooThing.class).setBinding().to(FooThing8.class);
+      }
+    }).getInstance(FooThing.class).value());
+  }
+
+  @Test
+  void testOptionalLinked() {
+    final Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        this.bind(FooThing.class).to(FooThing4.class);
+        this.bindOptional(FooThing.class);
+      }
+    });
+    assertEquals(4, injector.getInstance(InjectedFooThing.class).thing.value());
+    assertEquals(true, injector.getInstance(InjectedOptionalFooThing.class).optional.isPresent());
+    assertEquals(4, injector.getInstance(InjectedOptionalFooThing.class).optional.get().value());
   }
 
   private interface Thing {}
@@ -107,11 +148,14 @@ class VBinderTest {
     int value();
   }
 
-  private static class FooThingImpl implements FooThing {
+  private static class FooThing4 implements FooThing { @Override public int value() { return 4; } }
+  private static class FooThing8 implements FooThing { @Override public int value() { return 8; } }
+
+  private static class AssistedFooThing implements FooThing {
     final int value;
 
     @Inject
-    private FooThingImpl(@Assisted final int value) {
+    private AssistedFooThing(@Assisted final int value) {
       this.value = value;
     }
 
@@ -127,5 +171,13 @@ class VBinderTest {
 
   private static class FooThings {
     @Inject FooThingFactory factory;
+  }
+
+  private static class InjectedFooThing {
+    @Inject FooThing thing;
+  }
+
+  private static class InjectedOptionalFooThing {
+    @Inject Optional<FooThing> optional;
   }
 }

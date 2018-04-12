@@ -29,6 +29,7 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
+import com.google.inject.multibindings.OptionalBinder;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Set;
@@ -211,5 +212,41 @@ public interface VBinder extends ForwardingBinder {
    */
   default <T> @NonNull AnnotatedBindingBuilder<T> bindLazy(final @NonNull Class<T> type) {
     return this.bindLazy(Key.get(type));
+  }
+
+  /**
+   * Creates an optional builder.
+   *
+   * @param key the key for the optional binder
+   * @param <T> the type of object
+   * @return an optional binder
+   * @see OptionalBinder
+   */
+  default <T> @NonNull OptionalBinder<T> bindOptional(final @NonNull Key<T> key) {
+    return OptionalBinder.newOptionalBinder(this.binder(), key);
+  }
+
+  /**
+   * Creates an optional builder.
+   *
+   * @param type the type for the optional binder
+   * @param <T> the type of object
+   * @return an optional binder
+   * @see OptionalBinder
+   */
+  default <T> @NonNull OptionalBinder<T> bindOptional(final @NonNull TypeLiteral<T> type) {
+    return this.bindOptional(Key.get(type));
+  }
+
+  /**
+   * Creates an optional builder.
+   *
+   * @param type the type for the optional binder
+   * @param <T> the type of object
+   * @return an optional binder
+   * @see OptionalBinder
+   */
+  default <T> @NonNull OptionalBinder<T> bindOptional(final @NonNull Class<T> type) {
+    return this.bindOptional(Key.get(type));
   }
 }

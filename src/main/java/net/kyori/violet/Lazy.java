@@ -23,11 +23,11 @@
  */
 package net.kyori.violet;
 
-import com.google.inject.Inject;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.function.Supplier;
 
+import javax.inject.Inject;
 import javax.inject.Provider;
 
 /**
