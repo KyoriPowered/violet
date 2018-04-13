@@ -38,7 +38,6 @@ public interface VDuplexBinder extends ForwardingDuplexBinder, VPrivateBinder {
    * @return a wrapped duplex binder
    */
   static @NonNull VDuplexBinder of(final @NonNull DuplexBinder binder) {
-    // avoid re-wrapping
     if(binder instanceof VDuplexBinder) {
       return (VDuplexBinder) binder;
     }

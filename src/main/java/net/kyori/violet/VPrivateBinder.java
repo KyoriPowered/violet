@@ -44,7 +44,6 @@ public interface VPrivateBinder extends ForwardingPrivateBinder, VBinder {
    * @return a wrapped private binder
    */
   static @NonNull VPrivateBinder of(final @NonNull PrivateBinder binder) {
-    // avoid re-wrapping
     if(binder instanceof VPrivateBinder) {
       return (VPrivateBinder) binder;
     }

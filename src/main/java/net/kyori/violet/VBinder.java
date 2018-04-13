@@ -46,7 +46,6 @@ public interface VBinder extends ForwardingBinder {
    * @return a wrapped binder
    */
   static @NonNull VBinder of(final @NonNull Binder binder) {
-    // avoid re-wrapping
     if(binder instanceof VBinder) {
       return (VBinder) binder;
     }
