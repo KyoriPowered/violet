@@ -37,12 +37,13 @@ import java.lang.reflect.Constructor;
 /**
  * A linked binding builder which forwards all its method calls to another linked binding builder.
  */
-public interface ForwardingLinkedBindingBuilder<T> extends LinkedBindingBuilder<T> {
+public interface ForwardingLinkedBindingBuilder<T> extends ForwardingScopedBindingBuilder, LinkedBindingBuilder<T> {
   /**
    * Gets the forwarded linked binding builder that methods are forwarded to.
    *
    * @return the forwarded linked binding builder
    */
+  @Override
   @NonNull LinkedBindingBuilder<T> builder();
 
   @Override

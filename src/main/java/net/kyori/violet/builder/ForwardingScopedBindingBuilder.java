@@ -21,48 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.violet;
+package net.kyori.violet.builder;
 
-import com.google.inject.Binder;
-import com.google.inject.PrivateBinder;
-import com.google.inject.PrivateModule;
+import com.google.inject.Scope;
+import com.google.inject.binder.ScopedBindingBuilder;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.lang.annotation.Annotation;
+
 /**
- * A duplex binder is a {@link PrivateBinder} with access to the enclosing (public) environment
- * via {@link #publicBinder()}.
- *
- * @see PrivateModule
- * @see DuplexModule
+ * A scoped binding builder which forwards all its method calls to another scoped binding builder.
  */
-public interface DuplexBinder extends ForwardingPrivateBinder {
+public interface ForwardingScopedBindingBuilder extends ScopedBindingBuilder {
   /**
-   * Creates a new duplex binder.
+   * Gets the forwarded scoped binding builder that methods are forwarded to.
    *
-   * @param binder the enclosing (public) binder
-   * @return a new duplex binder
+   * @return the forwarded scoped binding builder
    */
-  static @NonNull DuplexBinder create(final @NonNull Binder binder) {
-    if(binder instanceof DuplexBinder) {
-      return (DuplexBinder) binder;
-    }
-    return new DuplexBinderImpl(binder, binder.newPrivateBinder());
-  }
-
-  /**
-   * Gets the binder of the enclosing environment.
-   *
-   * @return the binder of the enclosing environment
-   */
-  @NonNull Binder publicBinder();
+  @NonNull ScopedBindingBuilder builder();
 
   @Override
-  default DuplexBinder withSource(final Object source) {
-    return new DuplexBinderImpl(this.publicBinder().withSource(source), this.binder().withSource(source));
+  default void in(final Class<? extends Annotation> aClass) {
+    this.builder().in(aClass);
   }
 
   @Override
-  default DuplexBinder skipSources(final Class... classesToSkip) {
-    return new DuplexBinderImpl(this.publicBinder().skipSources(classesToSkip), this.binder().skipSources(classesToSkip));
+  default void in(final Scope scope) {
+    this.builder().in(scope);
+  }
+
+  @Override
+  default void asEagerSingleton() {
+    this.builder().asEagerSingleton();
   }
 }
