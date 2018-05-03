@@ -44,6 +44,10 @@ public class Lazy<T> implements Provider<T>, Supplier<T> {
   private T value;
   private boolean loaded;
 
+  public Lazy(final @NonNull Supplier<T> supplier) {
+    this((Provider<T>) supplier::get);
+  }
+
   @Inject
   public Lazy(final @NonNull Provider<T> provider) {
     this.provider = provider;
